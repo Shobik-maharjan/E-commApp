@@ -1,0 +1,18 @@
+.product-container {
+  height: calc(100vh - 80px);
+}
+
+.remove-arrow::-webkit-inner-spin-button,
+.remove-arrow::-webkit-outer-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
+input::file-selector-button {
+  background-color: rgb(16 185 129);
+  color: white;
+  border: none;
+  padding: 4px 8px;
+  cursor: pointer;
+  border-radius: 6px;
+}
