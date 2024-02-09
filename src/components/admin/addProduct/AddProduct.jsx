@@ -1,4 +1,5 @@
-import React, { useState } from "react";
+import React, { useRef, useState } from "react";
+import "react-toastify/dist/ReactToastify.css";
 import "./addProduct.scss";
 import {
   addDoc,
@@ -8,10 +9,21 @@ import {
   setDoc,
   updateDoc,
 } from "firebase/firestore";
-import { db } from "../../config/firebase";
+import { db, storage } from "../../config/firebase";
+import { ToastContainer, toast } from "react-toastify";
+import { getDownloadURL, ref, uploadBytes } from "firebase/storage";
 const AddProduct = () => {
-  const [data, setData] = useState({});
-
+  const [data, setData] = useState({
+    productName: "",
+    productPrice: 0,
+    category: "",
+    productQuantity: 0,
+    productDescription: "",
+    productImage: "",
+  });
+  const [error, setError] = useState("");
+  const fileInputRef = useRef(null);
+  const [imageUpload, setImageUpload] = useState(null);
   const handleChange = (e) => {
     const { name, value } = e.target;
     setData({
@@ -20,7 +32,7 @@ const AddProduct = () => {
     });
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
     const {
       productName,
@@ -28,8 +40,35 @@ const AddProduct = () => {
       category,
       productQuantity,
       productDescription,
+      productImage,
     } = data;
-    const dataBase = addDoc(collection(db, "products"), {
+
+    const fileInput = fileInputRef.current;
+    const file = fileInput.files[0];
+
+    if (
+      productName === "" ||
+      productName === null ||
+      productPrice === "" ||
+      productPrice === null ||
+      category === "" ||
+      category === null ||
+      productQuantity === "" ||
+      productQuantity === null ||
+      productDescription === "" ||
+      productDescription === null
+    ) {
+      setError("All fields are required");
+      console.log("All field are required");
+      return;
+    }
+
+    if (!file) {
+      setError("Please select an image");
+      return;
+    }
+
+    const dataBase = await addDoc(collection(db, "products"), {
       productName,
       productPrice,
       category,
@@ -37,7 +76,15 @@ const AddProduct = () => {
       productDescription,
     });
 
-    console.log("doc written");
+    const time = Date.now();
+    const storageRef = ref(storage, `productsImage/${time}${file.name}`);
+    // console.log(file.name);
+    uploadBytes(storageRef, file).then((snapshot) => {
+      productImage;
+      console.log("file uploaded");
+    });
+    toast.success("Product added successfully");
+    console.log("Product added successfully");
   };
 
   // for updating data
@@ -68,9 +115,8 @@ const AddProduct = () => {
   return (
     <>
       <div className="w-full bg-gray-200  product-container overflow-y-scroll">
-        <div className="container p-4 ">
+        <div className="p-4 ">
           <h2 className="text-3xl mb-4">Add new product</h2>
-
           <div className="flex gap-5">
             {/* left side form inputs */}
             <div className="flex flex-col w-full">
@@ -149,8 +195,12 @@ const AddProduct = () => {
                   name="productImage"
                   accept="image/*"
                   className="border border-black rounded-md p-2 bg-white cursor-pointer"
+                  onChange={handleChange}
+                  ref={fileInputRef}
                 />
               </div>
+
+              <div className="error text-red-500">{error}</div>
             </div>
           </div>
           <div className="flex items-center">
@@ -164,6 +214,7 @@ const AddProduct = () => {
           </div>
         </div>
       </div>
+      <ToastContainer />
     </>
   );
 };
