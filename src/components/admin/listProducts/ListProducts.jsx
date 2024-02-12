@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { db } from "../../config/firebase";
+import { db, storage } from "../../config/firebase";
 import {
   collection,
   deleteDoc,
@@ -7,25 +7,30 @@ import {
   getDoc,
   getDocs,
 } from "firebase/firestore";
+import { Outlet, useNavigate } from "react-router-dom";
+import ImageComponent from "../../firebase/ImageComponent";
 
 const ListProducts = () => {
+  const navigate = useNavigate();
   const [products, setProducts] = useState([]);
-  const [productId, setProductId] = useState([]);
+  const [imageId, setImageId] = useState([]);
 
   const fetchData = async () => {
     const querySnapshot = await getDocs(collection(db, "products"));
     const productData = [];
+    const imageData = [];
     querySnapshot.docs.forEach((doc) => {
       productData.push(doc.data());
       setProducts(productData);
     });
-    // console.log(productData);
+    querySnapshot.docs.forEach((doc) => {
+      imageData.push(doc.data());
+    });
   };
 
   const deleteProducts = async (pid) => {
     const querySnapshot = await getDocs(collection(db, "products"));
     const prodId = querySnapshot.docs[pid].id;
-    // console.log(pid);
     await deleteDoc(doc(db, "products", prodId));
     fetchData();
   };
@@ -35,7 +40,7 @@ const ListProducts = () => {
   }, []);
   return (
     <>
-      <div className="w-full p-4">
+      <div className="w-full p-4 overflow-y-scroll h-[calc(100vh-80px)]">
         <h2>Products List</h2>
         <table className="w-full table-auto text-left">
           <thead className="border-b border-black">
@@ -54,7 +59,9 @@ const ListProducts = () => {
                 <td className="py-4 w-4/12">{list.productName}</td>
                 <td className="py-4">{list.productPrice}</td>
                 <td className="py-4">{list.category}</td>
-                <td className="py-4">Image</td>
+                <td className="py-4 w-28">
+                  <ImageComponent imageName={list.productImage} />
+                </td>
                 <td className="py-4">{list.productQuantity}</td>
                 <td className="text-center w-fit py-4">
                   <button
@@ -63,7 +70,12 @@ const ListProducts = () => {
                   >
                     Del
                   </button>
-                  <button className="bg-emerald-500 py-1 px-4 rounded hover:bg-emerald-600 hover:text-white">
+                  <button
+                    className="bg-emerald-500 py-1 px-4 rounded hover:bg-emerald-600 hover:text-white"
+                    onClick={() => {
+                      navigate(`${i}`);
+                    }}
+                  >
                     Edit
                   </button>
                 </td>
@@ -72,6 +84,7 @@ const ListProducts = () => {
           </tbody>
         </table>
       </div>
+      <Outlet />
     </>
   );
 };

@@ -9,7 +9,7 @@ const Navbar = () => {
       <nav className="bg-slate-50">
         <ul className="flex items-center h-20 mx-auto">
           <li className="logo ml-7 font-bold text-2xl">
-            <Link to={"/"}>E-Comm App</Link>
+            <Link to={"/admin"}>Shadow Shop</Link>
           </li>
           <li className="m-auto w-1/2	">
             <Link>

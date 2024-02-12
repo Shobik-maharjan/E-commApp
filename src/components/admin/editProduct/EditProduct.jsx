@@ -1,6 +1,5 @@
-import React, { useRef, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import "react-toastify/dist/ReactToastify.css";
-import "./addProduct.scss";
 import {
   addDoc,
   collection,
@@ -9,10 +8,16 @@ import {
   setDoc,
   updateDoc,
 } from "firebase/firestore";
-import { db, storage } from "../../config/firebase";
+import { db } from "../../config/firebase";
 import { ToastContainer, toast } from "react-toastify";
-import { getDownloadURL, ref, uploadBytes } from "firebase/storage";
-const AddProduct = () => {
+import { useParams } from "react-router-dom";
+const EditProduct = () => {
+  const { product_id } = useParams();
+  console.log(product_id);
+  const [products, setProducts] = useState([]);
+  const [pid, setPid] = useState();
+
+  //   console.log(products.product_id);
   const [data, setData] = useState({
     productName: "",
     productPrice: 0,
@@ -31,7 +36,26 @@ const AddProduct = () => {
       [name]: value,
     });
   };
+  //   const fileInput = fileInputRef.current;
+  //   const file = fileInput.files[0];
+  const time = Date.now();
+  console.log(products);
 
+  const fetchData = async () => {
+    const querySnapshot = await getDocs(collection(db, "products"));
+    const productData = [];
+    querySnapshot.docs.forEach((doc) => {
+      productData.push(doc.id);
+      setPid(productData[pid]);
+    });
+    // querySnapshot.docs.forEach((doc) => {
+    //   imageData.push(doc.data());
+    //   console.log(imageData);
+    // });
+    console.log(productData[pid]);
+  };
+
+  // for updating data
   const handleSubmit = async (e) => {
     e.preventDefault();
     const {
@@ -40,84 +64,33 @@ const AddProduct = () => {
       category,
       productQuantity,
       productDescription,
-      productImage,
+      //   productImage,
     } = data;
-
-    const fileInput = fileInputRef.current;
-    const file = fileInput.files[0];
-
-    if (
-      productName === "" ||
-      productName === null ||
-      productPrice === "" ||
-      productPrice === null ||
-      category === "" ||
-      category === null ||
-      productQuantity === "" ||
-      productQuantity === null ||
-      productDescription === "" ||
-      productDescription === null
-    ) {
-      setError("All fields are required");
-      console.log("All field are required");
-      return;
-    }
-
-    if (!file) {
-      setError("Please select an image");
-      return;
-    }
-    const time = Date.now();
-    const dataBase = await addDoc(collection(db, "products"), {
+    await updateDoc(doc(db, "products", products), {
       productName,
       productPrice,
       category,
       productQuantity,
       productDescription,
-      productImage: `${time}${file.name}`,
+      //   productImage: `${time}${file.name}`,
     });
+    console.log("Product edited successfully");
+    // const querySnapshot = await getDocs(collection(db, "products"));
 
-    const storageRef = ref(storage, `productsImage/${time}${file.name}`);
-    // console.log(file.name);
-    uploadBytes(storageRef, file).then((snapshot) => {
-      productImage;
-      console.log("file uploaded");
-    });
-    setError("");
-    toast.success("Product added successfully");
-    console.log("Product added successfully");
+    // querySnapshot.forEach((doc) => {
+    //   console.log(`${doc.id}`);
+    //   const docId = doc.id;
+    // });
   };
-
-  // for updating data
-  // const handleSubmit = async (e) => {
-  //   e.preventDefault();
-  //   const {
-  //     productName,
-  //     productPrice,
-  //     category,
-  //     productQuantity,
-  //     productDescription,
-  //   } = data;
-  //   setDoc(doc(db, "products", "KL6EL202v6GvUYApZ9b4"), {
-  //     productName,
-  //     productPrice,
-  //     category,
-  //     productQuantity,
-  //     productDescription,
-  //   });
-  // const querySnapshot = await getDocs(collection(db, "products"));
-
-  // querySnapshot.forEach((doc) => {
-  //   console.log(`${doc.id}`);
-  //   const docId = doc.id;
-  // });
-  // };
-  // fetchData();
+  useEffect(() => {
+    fetchData();
+  }, []);
   return (
     <>
       <div className="w-full bg-gray-200  product-container overflow-y-scroll">
         <div className="p-4 ">
-          <h2 className="text-3xl mb-4">Add new product</h2>
+          <h2 className="text-3xl mb-4">Edit product</h2>
+
           <div className="flex gap-5">
             {/* left side form inputs */}
             <div className="flex flex-col w-full">
@@ -127,6 +100,7 @@ const AddProduct = () => {
                   type="text"
                   id="productName"
                   name="productName"
+                  value={products.productName}
                   className="border border-black rounded-md p-2"
                   onChange={handleChange}
                 />
@@ -158,6 +132,7 @@ const AddProduct = () => {
                   name="productDescription"
                   className="border border-black rounded-md p-2"
                   onChange={handleChange}
+                  value={data.productDescription}
                 />
               </div>
             </div>
@@ -220,4 +195,4 @@ const AddProduct = () => {
   );
 };
 
-export default AddProduct;
+export default EditProduct;

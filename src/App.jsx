@@ -7,16 +7,23 @@ import AddProduct from "./components/admin/addProduct/AddProduct";
 import "./app.css";
 import AdminDashboard from "./components/admin/dashboard/AdminDashboard";
 import ListProducts from "./components/admin/listProducts/ListProducts";
+import EditProduct from "./components/admin/editProduct/EditProduct";
 
+// nested route
 const App = () => {
   return (
     <>
       <BrowserRouter>
         <Routes>
           <Route path="/admin" element={<AdminDashboard />}>
-            <Route path="dashboard" element={<Content />} />
-            <Route path="addProduct" element={<AddProduct />} />
-            <Route path="listProduct" element={<ListProducts />} />
+            <Route index element={<Content />} />
+
+            <Route path="products">
+              <Route index element={<ListProducts />} />
+              <Route path="add" element={<AddProduct />} />
+              {/* <Route path=":product_id" element={<ListProducts />} /> */}
+              <Route path=":product_id" element={<EditProduct />} />
+            </Route>
           </Route>
         </Routes>
       </BrowserRouter>
