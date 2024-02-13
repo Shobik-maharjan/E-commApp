@@ -10,49 +10,48 @@ import {
 } from "firebase/firestore";
 import { db } from "../../config/firebase";
 import { ToastContainer, toast } from "react-toastify";
-import { useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 const EditProduct = () => {
   const { product_id } = useParams();
-  console.log(product_id);
-  const [products, setProducts] = useState([]);
-  const [pid, setPid] = useState();
-
-  //   console.log(products.product_id);
-  const [data, setData] = useState({
+  const navigate = useNavigate();
+  const [product, setProduct] = useState({
     productName: "",
     productPrice: 0,
     category: "",
     productQuantity: 0,
     productDescription: "",
-    productImage: "",
+    // productImage: "",
   });
   const [error, setError] = useState("");
   const fileInputRef = useRef(null);
   const [imageUpload, setImageUpload] = useState(null);
   const handleChange = (e) => {
     const { name, value } = e.target;
-    setData({
-      ...data,
+    setProduct({
+      ...product,
       [name]: value,
     });
   };
-  //   const fileInput = fileInputRef.current;
-  //   const file = fileInput.files[0];
   const time = Date.now();
-  console.log(products);
 
   const fetchData = async () => {
     const querySnapshot = await getDocs(collection(db, "products"));
     const productData = [];
     querySnapshot.docs.forEach((doc) => {
-      productData.push(doc.id);
-      setPid(productData[pid]);
+      productData.push({
+        id: doc.id,
+        data: doc.data(),
+      });
     });
-    // querySnapshot.docs.forEach((doc) => {
-    //   imageData.push(doc.data());
-    //   console.log(imageData);
-    // });
-    console.log(productData[pid]);
+    let selectedProduct = [];
+    for (let i = 0; i < productData.length; i++) {
+      if (productData[i].id === product_id) {
+        selectedProduct = productData[i];
+      }
+    }
+    if (selectedProduct) {
+      setProduct(selectedProduct.data);
+    }
   };
 
   // for updating data
@@ -65,8 +64,8 @@ const EditProduct = () => {
       productQuantity,
       productDescription,
       //   productImage,
-    } = data;
-    await updateDoc(doc(db, "products", products), {
+    } = product;
+    await updateDoc(doc(db, "products", product_id), {
       productName,
       productPrice,
       category,
@@ -74,7 +73,9 @@ const EditProduct = () => {
       productDescription,
       //   productImage: `${time}${file.name}`,
     });
-    console.log("Product edited successfully");
+    navigate("/admin/products");
+    toast.success("Product edited successfully");
+    // console.log("Product edited successfully");
     // const querySnapshot = await getDocs(collection(db, "products"));
 
     // querySnapshot.forEach((doc) => {
@@ -90,7 +91,6 @@ const EditProduct = () => {
       <div className="w-full bg-gray-200  product-container overflow-y-scroll">
         <div className="p-4 ">
           <h2 className="text-3xl mb-4">Edit product</h2>
-
           <div className="flex gap-5">
             {/* left side form inputs */}
             <div className="flex flex-col w-full">
@@ -100,7 +100,7 @@ const EditProduct = () => {
                   type="text"
                   id="productName"
                   name="productName"
-                  value={products.productName}
+                  value={product.productName}
                   className="border border-black rounded-md p-2"
                   onChange={handleChange}
                 />
@@ -111,7 +111,7 @@ const EditProduct = () => {
                   name="category"
                   id="category"
                   className="border border-black rounded-md p-2"
-                  value={data.category || ""}
+                  value={product.category || ""}
                   onChange={handleChange}
                 >
                   <option value="" disabled>
@@ -132,7 +132,7 @@ const EditProduct = () => {
                   name="productDescription"
                   className="border border-black rounded-md p-2"
                   onChange={handleChange}
-                  value={data.productDescription}
+                  value={product.productDescription}
                 />
               </div>
             </div>
@@ -146,6 +146,7 @@ const EditProduct = () => {
                   id="productPrice"
                   name="productPrice"
                   min={0}
+                  value={product.productPrice}
                   className="border border-black rounded-md p-2 remove-arrow"
                   onChange={handleChange}
                 />
@@ -158,6 +159,7 @@ const EditProduct = () => {
                   id="productQuantity"
                   name="productQuantity"
                   min={0}
+                  value={product.productQuantity}
                   className="border border-black rounded-md p-2 remove-arrow"
                   onChange={handleChange}
                 />
@@ -182,10 +184,19 @@ const EditProduct = () => {
           <div className="flex items-center">
             <button
               type="submit"
-              className="bg-emerald-500 px-5 py-2 rounded-md text-white hover:bg-emerald-600"
+              className="bg-emerald-500 px-5 py-2 mr-4 rounded-md text-white hover:bg-emerald-600"
               onClick={handleSubmit}
             >
               Submit
+            </button>
+            <button
+              type="submit"
+              className="bg-red-500 px-5 py-2 rounded-md text-white hover:bg-red-600"
+              onClick={() => {
+                navigate("/admin/products");
+              }}
+            >
+              Cancel
             </button>
           </div>
         </div>

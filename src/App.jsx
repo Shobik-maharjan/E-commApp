@@ -8,6 +8,7 @@ import "./app.css";
 import AdminDashboard from "./components/admin/dashboard/AdminDashboard";
 import ListProducts from "./components/admin/listProducts/ListProducts";
 import EditProduct from "./components/admin/editProduct/EditProduct";
+import Login from "./components/admin/login/Login";
 
 // nested route
 const App = () => {
@@ -15,6 +16,7 @@ const App = () => {
     <>
       <BrowserRouter>
         <Routes>
+          <Route path="/admin/login" element={<Login />} />
           <Route path="/admin" element={<AdminDashboard />}>
             <Route index element={<Content />} />
 

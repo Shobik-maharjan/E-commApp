@@ -11,7 +11,7 @@ import {
 } from "firebase/firestore";
 import { db, storage } from "../../config/firebase";
 import { ToastContainer, toast } from "react-toastify";
-import { getDownloadURL, ref, uploadBytes } from "firebase/storage";
+import { ref, uploadBytes } from "firebase/storage";
 const AddProduct = () => {
   const [data, setData] = useState({
     productName: "",
@@ -21,9 +21,10 @@ const AddProduct = () => {
     productDescription: "",
     productImage: "",
   });
+  const category = ["Mobile", "Monitor", "Laptop", "Smart Watch"];
   const [error, setError] = useState("");
   const fileInputRef = useRef(null);
-  const [imageUpload, setImageUpload] = useState(null);
+
   const handleChange = (e) => {
     const { name, value } = e.target;
     setData({
@@ -31,7 +32,6 @@ const AddProduct = () => {
       [name]: value,
     });
   };
-
   const handleSubmit = async (e) => {
     e.preventDefault();
     const {
@@ -59,7 +59,7 @@ const AddProduct = () => {
       productDescription === null
     ) {
       setError("All fields are required");
-      console.log("All field are required");
+      // console.log("All field are required");
       return;
     }
 
@@ -78,14 +78,13 @@ const AddProduct = () => {
     });
 
     const storageRef = ref(storage, `productsImage/${time}${file.name}`);
-    // console.log(file.name);
     uploadBytes(storageRef, file).then((snapshot) => {
       productImage;
-      console.log("file uploaded");
+      // console.log("file uploaded");
     });
     setError("");
     toast.success("Product added successfully");
-    console.log("Product added successfully");
+    // console.log("Product added successfully");
   };
 
   // for updating data
@@ -115,7 +114,7 @@ const AddProduct = () => {
   // fetchData();
   return (
     <>
-      <div className="w-full bg-gray-200  product-container overflow-y-scroll">
+      <div className="w-full bg-gray-200 product-container overflow-y-scroll">
         <div className="p-4 ">
           <h2 className="text-3xl mb-4">Add new product</h2>
           <div className="flex gap-5">
@@ -143,9 +142,13 @@ const AddProduct = () => {
                   <option value="" disabled>
                     Select a category
                   </option>
-                  <option value="mobile">Mobile</option>
+                  {category.map((category, i) => (
+                    <option value={category}>{category}</option>
+                  ))}
+                  {/* <option value="mobile">Mobile</option>
                   <option value="laptop">Laptop</option>
                   <option value="monitor">Monitor</option>
+                  <option value="monitor">Smart Watch</option> */}
                 </select>
               </div>
               <div className="mb-4 flex flex-col">
