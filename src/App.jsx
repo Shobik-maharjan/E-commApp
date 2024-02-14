@@ -9,6 +9,7 @@ import AdminDashboard from "./components/admin/dashboard/AdminDashboard";
 import ListProducts from "./components/admin/listProducts/ListProducts";
 import EditProduct from "./components/admin/editProduct/EditProduct";
 import Login from "./components/admin/login/Login";
+import ProtectedRoutes from "./components/admin/routes/ProtectedRoutes";
 
 // nested route
 const App = () => {
@@ -16,17 +17,17 @@ const App = () => {
     <>
       <BrowserRouter>
         <Routes>
-          <Route path="/admin/login" element={<Login />} />
-          <Route path="/admin" element={<AdminDashboard />}>
-            <Route index element={<Content />} />
-
-            <Route path="products">
-              <Route index element={<ListProducts />} />
-              <Route path="add" element={<AddProduct />} />
-              {/* <Route path=":product_id" element={<ListProducts />} /> */}
-              <Route path=":product_id" element={<EditProduct />} />
+          <Route element={<ProtectedRoutes />}>
+            <Route path="/admin" element={<AdminDashboard />}>
+              <Route index element={<Content />} />
+              <Route path="products">
+                <Route index element={<ListProducts />} />
+                <Route path="add" element={<AddProduct />} />
+                <Route path=":product_id" element={<EditProduct />} />
+              </Route>
             </Route>
           </Route>
+          <Route path="/admin/login" element={<Login />} />
         </Routes>
       </BrowserRouter>
     </>

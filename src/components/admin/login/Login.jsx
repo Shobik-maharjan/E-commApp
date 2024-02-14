@@ -1,8 +1,8 @@
 import React, { useState } from "react";
 import "./login.scss";
 import { Link, useNavigate } from "react-router-dom";
-// import { signInWithEmailAndPassword } from "firebase/auth";
-// import { auth } from "./database/Firebase";
+import { signInWithEmailAndPassword } from "firebase/auth";
+import { auth } from "../../config/firebase";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 
@@ -12,6 +12,14 @@ const Login = () => {
   const [password, setPassword] = useState("");
   const [error, setError] = useState("");
   const [loading, setLoading] = useState(false);
+
+  const expireDate = new Date().setDate(new Date().getDate() + 1);
+
+  // console.log(expireDate);
+  // const milliseconds = 1707902283340;
+  // const dateObject = new Date(milliseconds);
+  // const formattedDate = dateObject.toUTCString();
+  // console.log(formattedDate);
 
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -28,11 +36,18 @@ const Login = () => {
       signInWithEmailAndPassword(auth, email, password)
         .then((userCredential) => {
           const user = userCredential.user;
-          localStorage.setItem("authenticated", user.uid);
+          // console.log(user.stsTokenManager);
+          localStorage.setItem(
+            "admin",
+            JSON.stringify({
+              value: user.stsTokenManager.accessToken,
+              expireDate: expireDate,
+            })
+          );
           toast.success("logged in successfully");
           setLoading(false);
           setTimeout(() => {
-            navigate("/");
+            navigate("/admin");
           }, 1000);
         })
         .catch((err) => {
@@ -45,6 +60,7 @@ const Login = () => {
       setError("email and password is required");
     }
   };
+
   return (
     <>
       <div className="bg-gray-200 m-auto max-w-md mt-28 px-8 py-10 rounded-md uppercase shadow-[6px_6px_14px_1px]">

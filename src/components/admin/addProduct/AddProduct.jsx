@@ -143,7 +143,9 @@ const AddProduct = () => {
                     Select a category
                   </option>
                   {category.map((category, i) => (
-                    <option value={category}>{category}</option>
+                    <option key={i} value={category}>
+                      {category}
+                    </option>
                   ))}
                   {/* <option value="mobile">Mobile</option>
                   <option value="laptop">Laptop</option>

@@ -1,9 +1,20 @@
-import React from "react";
-import { Link } from "react-router-dom";
+import React, { useState } from "react";
+import { Link, useNavigate } from "react-router-dom";
 import { IoIosNotifications } from "react-icons/io";
 import { RxAvatar } from "react-icons/rx";
 import "./navbar.scss";
 const Navbar = () => {
+  const navigate = useNavigate();
+  const [showLogout, setShowLogout] = useState(false);
+
+  const handleAvatarClick = () => {
+    setShowLogout(!showLogout);
+  };
+
+  const logout = () => {
+    localStorage.removeItem("admin");
+    navigate("/admin/login");
+  };
   return (
     <>
       <nav className="bg-slate-50">
@@ -28,9 +39,19 @@ const Navbar = () => {
             </Link>
           </li>
           <li className="mr-7 text-3xl">
-            <Link>
+            <Link onClick={handleAvatarClick}>
               <RxAvatar />
             </Link>
+            {showLogout && (
+              <div className="absolute right-0 m-2 bg-white px-6 py-2">
+                <button
+                  className="text-lg bg-emerald-500 hover:bg-emerald-600 p-2 rounded text-white"
+                  onClick={logout}
+                >
+                  Logout
+                </button>
+              </div>
+            )}
           </li>
         </ul>
       </nav>
