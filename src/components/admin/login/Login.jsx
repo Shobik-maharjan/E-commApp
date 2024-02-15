@@ -36,14 +36,15 @@ const Login = () => {
       signInWithEmailAndPassword(auth, email, password)
         .then((userCredential) => {
           const user = userCredential.user;
-          // console.log(user.stsTokenManager);
+          console.log(user);
           localStorage.setItem(
             "admin",
             JSON.stringify({
-              value: user.stsTokenManager.accessToken,
+              value: user.accessToken,
               expireDate: expireDate,
             })
           );
+          localStorage.setItem("userID", user.uid);
           toast.success("logged in successfully");
           setLoading(false);
           setTimeout(() => {
@@ -88,7 +89,7 @@ const Login = () => {
               id="password"
               onChange={(e) => setPassword(e.target.value)}
               placeholder="password"
-              className="w-full my-2 mx-auto p-2.5 rounded-md"
+              className="w-full my-2 mx-auto p-2.5 rounded-md outline-none"
             />
           </div>
           <button
