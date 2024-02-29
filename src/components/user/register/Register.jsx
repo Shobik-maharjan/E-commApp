@@ -39,20 +39,17 @@ const Register = () => {
         createUserWithEmailAndPassword(auth, email, password)
           .then((userCredential) => {
             const user = userCredential.user;
-            setUserId(user.uid);
-            console.log(user.uid);
             toast.success("User registered successfully");
-            setTimeout(() => {
-              navigate("/protedted");
-            }, 2000);
+            // setTimeout(() => {
+            //   navigate("/protedted");
+            // }, 2000);
             setLoading(false);
-          })
-          .then(() => {
+
             addDoc(collection(db, "users"), {
-              email,
+              email: user.email,
               password,
               role,
-              userId,
+              userId: user.uid,
             });
           })
           .catch((err) => {
