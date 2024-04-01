@@ -9,8 +9,8 @@ import {
   setDoc,
   updateDoc,
 } from "firebase/firestore";
-import { db, storage } from "../../config/firebase";
-import { ToastContainer, toast } from "react-toastify";
+import { db, storage } from "../../../config/firebase";
+import { toast } from "react-toastify";
 import { ref, uploadBytes } from "firebase/storage";
 const AddProduct = () => {
   const [data, setData] = useState({
@@ -113,115 +113,112 @@ const AddProduct = () => {
   // };
   // fetchData();
   return (
-    <>
-      <div className="w-full bg-gray-200 product-container overflow-y-scroll">
-        <div className="p-4 ">
-          <h2 className="text-3xl mb-4">Add new product</h2>
-          <div className="flex gap-5">
-            {/* left side form inputs */}
-            <div className="flex flex-col w-full">
-              <div className="mb-4 flex flex-col">
-                <label htmlFor="productName">Product Name</label>
-                <input
-                  type="text"
-                  id="productName"
-                  name="productName"
-                  className="border border-black rounded-md p-2"
-                  onChange={handleChange}
-                />
-              </div>
-              <div className="mb-4 flex flex-col">
-                <label htmlFor="category">Category</label>
-                <select
-                  name="category"
-                  id="category"
-                  className="border border-black rounded-md p-2"
-                  value={data.category || ""}
-                  onChange={handleChange}
-                >
-                  <option value="" disabled>
-                    Select a category
+    <div className="w-full bg-gray-200 product-container overflow-y-scroll">
+      <div className="p-4 ">
+        <h2 className="text-3xl mb-4">Add new product</h2>
+        <div className="flex gap-5">
+          {/* left side form inputs */}
+          <div className="flex flex-col w-full">
+            <div className="mb-4 flex flex-col">
+              <label htmlFor="productName">Product Name</label>
+              <input
+                type="text"
+                id="productName"
+                name="productName"
+                className="border border-black rounded-md p-2"
+                onChange={handleChange}
+              />
+            </div>
+            <div className="mb-4 flex flex-col">
+              <label htmlFor="category">Category</label>
+              <select
+                name="category"
+                id="category"
+                className="border border-black rounded-md p-2"
+                value={data.category || ""}
+                onChange={handleChange}
+              >
+                <option value="" disabled>
+                  Select a category
+                </option>
+                {category.map((category, i) => (
+                  <option key={i} value={category}>
+                    {category}
                   </option>
-                  {category.map((category, i) => (
-                    <option key={i} value={category}>
-                      {category}
-                    </option>
-                  ))}
-                  {/* <option value="mobile">Mobile</option>
+                ))}
+                {/* <option value="mobile">Mobile</option>
                   <option value="laptop">Laptop</option>
                   <option value="monitor">Monitor</option>
                   <option value="monitor">Smart Watch</option> */}
-                </select>
-              </div>
-              <div className="mb-4 flex flex-col">
-                <label htmlFor="productName">Product Description</label>
-                <textarea
-                  type="number"
-                  cols="30"
-                  rows="5"
-                  id="productDescription"
-                  name="productDescription"
-                  className="border border-black rounded-md p-2"
-                  onChange={handleChange}
-                />
-              </div>
+              </select>
             </div>
-
-            {/* right side form inputs */}
-            <div className="flex flex-col w-full">
-              <div className="mb-4 flex flex-col">
-                <label htmlFor="productName">Product Price</label>
-                <input
-                  type="number"
-                  id="productPrice"
-                  name="productPrice"
-                  min={0}
-                  className="border border-black rounded-md p-2 remove-arrow"
-                  onChange={handleChange}
-                />
-              </div>
-
-              <div className="mb-4 flex flex-col">
-                <label htmlFor="productName">Product Quantity</label>
-                <input
-                  type="number"
-                  id="productQuantity"
-                  name="productQuantity"
-                  min={0}
-                  className="border border-black rounded-md p-2 remove-arrow"
-                  onChange={handleChange}
-                />
-              </div>
-
-              <div className="mb-4 flex flex-col">
-                <label htmlFor="productName">Product Image</label>
-                <input
-                  type="file"
-                  id="productImage"
-                  name="productImage"
-                  accept="image/*"
-                  className="border border-black rounded-md p-2 bg-white cursor-pointer"
-                  onChange={handleChange}
-                  ref={fileInputRef}
-                />
-              </div>
-
-              <div className="error text-red-500">{error}</div>
+            <div className="mb-4 flex flex-col">
+              <label htmlFor="productName">Product Description</label>
+              <textarea
+                type="number"
+                cols="30"
+                rows="5"
+                id="productDescription"
+                name="productDescription"
+                className="border border-black rounded-md p-2"
+                onChange={handleChange}
+              />
             </div>
           </div>
-          <div className="flex items-center">
-            <button
-              type="submit"
-              className="bg-emerald-500 px-5 py-2 rounded-md text-white hover:bg-emerald-600"
-              onClick={handleSubmit}
-            >
-              Submit
-            </button>
+
+          {/* right side form inputs */}
+          <div className="flex flex-col w-full">
+            <div className="mb-4 flex flex-col">
+              <label htmlFor="productName">Product Price</label>
+              <input
+                type="number"
+                id="productPrice"
+                name="productPrice"
+                min={0}
+                className="border border-black rounded-md p-2 remove-arrow"
+                onChange={handleChange}
+              />
+            </div>
+
+            <div className="mb-4 flex flex-col">
+              <label htmlFor="productName">Product Quantity</label>
+              <input
+                type="number"
+                id="productQuantity"
+                name="productQuantity"
+                min={0}
+                className="border border-black rounded-md p-2 remove-arrow"
+                onChange={handleChange}
+              />
+            </div>
+
+            <div className="mb-4 flex flex-col">
+              <label htmlFor="productName">Product Image</label>
+              <input
+                type="file"
+                id="productImage"
+                name="productImage"
+                accept="image/*"
+                className="border border-black rounded-md p-2 bg-white cursor-pointer"
+                onChange={handleChange}
+                ref={fileInputRef}
+              />
+            </div>
+
+            <div className="error text-red-500">{error}</div>
           </div>
         </div>
+        <div className="flex items-center">
+          <button
+            type="submit"
+            className="bg-emerald-500 px-5 py-2 rounded-md text-white hover:bg-emerald-600"
+            onClick={handleSubmit}
+          >
+            Submit
+          </button>
+        </div>
       </div>
-      <ToastContainer />
-    </>
+    </div>
   );
 };
 

@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { db, storage } from "../../config/firebase";
+import { db, storage } from "../../../config/firebase";
 import {
   collection,
   deleteDoc,
@@ -10,7 +10,7 @@ import {
 import { Outlet, useNavigate } from "react-router-dom";
 import ImageComponent from "../../firebase/ImageComponent";
 import { deleteObject, ref } from "firebase/storage";
-import { ToastContainer, toast } from "react-toastify";
+import { toast } from "react-toastify";
 
 const ListProducts = () => {
   const navigate = useNavigate();
@@ -63,51 +63,55 @@ const ListProducts = () => {
       <div className="w-full p-4 overflow-y-scroll h-[calc(100vh-80px)] bg-gray-200">
         <h2 className="text-3xl mb-4">Products List</h2>
         <div id="loading" className={loading ? "display" : ""}></div>
-        <table className="w-full table-auto text-left">
-          <thead className="border-b border-black">
-            <tr className="text-center">
-              <th>Product Name</th>
-              <th>Product Description</th>
-              <th>Price</th>
-              <th>Category</th>
-              <th>Image</th>
-              <th>Quantity</th>
-            </tr>
-          </thead>
-
-          <tbody>
-            {products.map((list, i) => (
-              <tr className="border-b border-black text-center" key={i}>
-                <td className="py-4 w-2/12">{list.productName}</td>
-                <td className="py-4">{list.productDescription}</td>
-                <td className="py-4">{list.productPrice}</td>
-                <td className="py-4">{list.category}</td>
-                <td className="py-4 w-28">
-                  <ImageComponent imageName={list.productImage} />
-                </td>
-                <td className="py-4 text-center">{list.productQuantity}</td>
-                <td className="text-center w-fit py-4">
-                  <button
-                    className="bg-red-500 py-1 px-4 rounded mr-4 hover:bg-red-600 text-white"
-                    onClick={() => deleteProducts(i)}
-                  >
-                    Delete
-                  </button>
-                  <button
-                    className="bg-emerald-500 py-1 px-4 rounded hover:bg-emerald-600 text-white"
-                    onClick={() => {
-                      navigate(`${productId[i]}`);
-                    }}
-                  >
-                    Edit
-                  </button>
-                </td>
+        {loading ? (
+          ""
+        ) : (
+          <table className="w-full table-auto text-left">
+            <thead className="border-b border-black">
+              <tr className="text-center">
+                <th>Product Name</th>
+                <th>Product Description</th>
+                <th>Price</th>
+                <th>Category</th>
+                <th>Image</th>
+                <th>Quantity</th>
               </tr>
-            ))}
-          </tbody>
-        </table>
+            </thead>
+
+            <tbody>
+              {products.map((list, i) => (
+                <tr className="border-b border-black text-center" key={i}>
+                  <td className="py-4 w-2/12">{list.productName}</td>
+                  <td className="py-4">{list.productDescription}</td>
+                  <td className="py-4">{list.productPrice}</td>
+                  <td className="py-4">{list.category}</td>
+                  <td className="py-4 w-28">
+                    <ImageComponent imageName={list.productImage} />
+                  </td>
+                  <td className="py-4 text-center">{list.productQuantity}</td>
+                  <td className="text-center w-fit py-4">
+                    <button
+                      className="bg-red-500 py-1 px-4 rounded mr-4 hover:bg-red-600 text-white"
+                      onClick={() => deleteProducts(i)}
+                    >
+                      Delete
+                    </button>
+                    <button
+                      className="bg-emerald-500 py-1 px-4 rounded hover:bg-emerald-600 text-white"
+                      onClick={() => {
+                        navigate(`${productId[i]}`);
+                      }}
+                    >
+                      Edit
+                    </button>
+                  </td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
+        )}
       </div>
-      <ToastContainer />
+      {/* <ToastContainer /> */}
       <Outlet />
     </>
   );

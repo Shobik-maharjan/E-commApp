@@ -1,0 +1,6 @@
+export const GET_PRODUCT = "GET_PRODUCT";
+export const GET_PRODUCT_ID = "GET_PRODUCT_ID";
+export const GET_SINGLE_PRODUCT = "GET_SINGLE_PRODUCT";
+export const LOGIN_REQUEST = "LOGIN_REQUEST";
+export const LOGIN_FAIL = "LOGIN_FAIL";
+export const REGISTER_FAIL = "REGISTER_FAIL";

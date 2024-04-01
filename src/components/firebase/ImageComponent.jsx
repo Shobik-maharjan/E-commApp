@@ -1,8 +1,8 @@
 import React, { useState, useEffect } from "react";
 import { getStorage, ref, getDownloadURL } from "firebase/storage";
-import { storage } from "../config/firebase";
+import { storage } from "../../config/firebase";
 
-const ImageComponent = ({ imageName }) => {
+const ImageComponent = ({ imageName, width, height }) => {
   const [imageURL, setImageURL] = useState(null);
 
   useEffect(() => {
@@ -31,9 +31,13 @@ const ImageComponent = ({ imageName }) => {
   }, [imageName]);
 
   return (
-    <div>
+    <div className="flex items-center justify-center">
       {imageURL ? (
-        <img src={imageURL} alt={imageName} />
+        <img
+          src={imageURL}
+          alt={imageName}
+          className={`${width} ${height} object-cover rounded-md`}
+        />
       ) : (
         <p>Image not found</p>
       )}

@@ -1,8 +1,8 @@
 import React, { useEffect, useRef, useState } from "react";
 import "react-toastify/dist/ReactToastify.css";
 import { collection, doc, getDocs, updateDoc } from "firebase/firestore";
-import { db } from "../../config/firebase";
-import { ToastContainer, toast } from "react-toastify";
+import { db } from "../../../config/firebase";
+import { toast } from "react-toastify";
 import { useNavigate, useParams } from "react-router-dom";
 const EditProduct = () => {
   const { product_id } = useParams();
@@ -194,7 +194,6 @@ const EditProduct = () => {
           </div>
         </div>
       </div>
-      <ToastContainer />
     </>
   );
 };
