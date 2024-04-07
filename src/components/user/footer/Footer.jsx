@@ -129,7 +129,7 @@ const Footer = () => {
                 </Link>
                 <Link
                   to=""
-                  className="hover:scale-150 transition-transform duration-300 p-1 hover:bg-gradient-to-tr from-orange-500 via-red-500 via-pink-500  to-blue-600 hover:rounded-md hover:text-white"
+                  className="hover:scale-150 transition-transform duration-300 p-1 hover:bg-gradient-to-tr from-orange-500 via-pink-500  to-blue-600 hover:rounded-md hover:text-white"
                 >
                   <FaInstagram />
                 </Link>
