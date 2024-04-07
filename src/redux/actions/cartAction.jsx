@@ -1,16 +1,30 @@
 import { onAuthStateChanged } from "firebase/auth";
 import { auth, db } from "../../config/firebase";
-import { arrayUnion, doc, getDoc, updateDoc } from "firebase/firestore";
+import {
+  arrayRemove,
+  arrayUnion,
+  doc,
+  getDoc,
+  updateDoc,
+} from "firebase/firestore";
 import {
   ADD_TO_MY_CART,
   CART_REQUEST,
+  CART_REQUEST_FAIL,
   CART_REQUEST_SUCCESS,
   GET_CART,
 } from "../constants/cartConstant";
 import { toast } from "react-toastify";
 
 export const addToCart =
-  ({ id, productName, productImage, productPrice, totalQuantity }) =>
+  ({
+    id,
+    productName,
+    productImage,
+    productPrice,
+    totalQuantity,
+    productQuantity,
+  }) =>
   (dispatch) => {
     try {
       onAuthStateChanged(auth, async (user) => {
@@ -18,11 +32,9 @@ export const addToCart =
           const userId = user.uid;
           const docRef = doc(db, "users", userId);
           const docSnap = await getDoc(docRef);
-          const myList = docSnap?.data()?.myCart;
-          console.log(myList);
-          console.log(id);
+          const myCart = docSnap?.data()?.myCart;
 
-          const isDuplicateData = myList?.some((item) => item.id == id);
+          const isDuplicateData = myCart?.some((item) => item.id == id);
           if (!isDuplicateData) {
             await updateDoc(docRef, {
               myCart: arrayUnion({
@@ -31,6 +43,7 @@ export const addToCart =
                 productImage,
                 productPrice,
                 totalQuantity,
+                productQuantity,
               }),
             });
             dispatch({
@@ -56,15 +69,14 @@ export const addToCart =
 
 export const getCartData = () => async (dispatch) => {
   try {
-    // dispatch({
-    //   type: CART_REQUEST,
-    // });
+    dispatch({
+      type: CART_REQUEST,
+    });
     onAuthStateChanged(auth, async (user) => {
       if (user) {
         const userId = user.uid;
         const querySnapshot = await getDoc(doc(db, "users", userId));
         const data = querySnapshot.data()?.myCart;
-        console.log(data);
         dispatch({
           type: GET_CART,
           payload: data,
@@ -72,6 +84,29 @@ export const getCartData = () => async (dispatch) => {
         dispatch({
           type: CART_REQUEST_SUCCESS,
         });
+      }
+      dispatch({
+        type: CART_REQUEST_FAIL,
+      });
+    });
+  } catch (error) {
+    dispatch({
+      type: CART_REQUEST_FAIL,
+    });
+    console.log(error);
+  }
+};
+
+export const deleteCardData = (index) => async (dispatch) => {
+  try {
+    onAuthStateChanged(auth, async (user) => {
+      if (user) {
+        const userId = user.uid;
+        await updateDoc(doc(db, "users", userId), {
+          myCart: arrayRemove(index),
+        });
+        toast.success("Removed from my list");
+        dispatch(getCartData());
       }
     });
   } catch (error) {

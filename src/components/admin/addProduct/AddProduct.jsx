@@ -1,6 +1,5 @@
 import React, { useRef, useState } from "react";
 import "react-toastify/dist/ReactToastify.css";
-import "./addProduct.scss";
 import {
   addDoc,
   collection,

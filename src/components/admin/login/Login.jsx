@@ -1,5 +1,4 @@
 import React, { useEffect, useState } from "react";
-import "./login.scss";
 import { Link, useNavigate } from "react-router-dom";
 import { signInWithEmailAndPassword } from "firebase/auth";
 import { toast } from "react-toastify";

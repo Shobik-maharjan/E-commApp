@@ -1,6 +1,8 @@
 import {
   ADD_TO_MY_CART,
   CART_REQUEST,
+  CART_REQUEST_FAIL,
+  CART_REQUEST_SUCCESS,
   GET_CART,
 } from "../constants/cartConstant";
 
@@ -20,11 +22,21 @@ const cartReducer = (state = initialData, action) => {
         ...state,
         getCart: action.payload,
       };
-    // case CART_REQUEST:
-    //   return {
-    //     ...state,
-    //     getProduct: action.payload,
-    //   };
+    case CART_REQUEST:
+      return {
+        ...state,
+        loading: true,
+      };
+    case CART_REQUEST_SUCCESS:
+      return {
+        ...state,
+        loading: false,
+      };
+    case CART_REQUEST_FAIL:
+      return {
+        ...state,
+        loading: false,
+      };
     default:
       return state;
   }

@@ -1,20 +1,16 @@
-import React, { useEffect } from "react";
-import { Outlet, useNavigate } from "react-router-dom";
+import React from "react";
+import { Outlet } from "react-router-dom";
 import Navbar from "../components/user/navbar/Navbar";
+import Footer from "../components/user/footer/Footer";
 
 const UserLayout = () => {
-  const navigate = useNavigate();
-  const getUser = localStorage.getItem("user");
-
-  useEffect(() => {
-    if (getUser === null) {
-      navigate("/login");
-    }
-  }, [getUser, navigate]);
   return (
     <>
-      <Navbar />
-      <Outlet />
+      <div className="w-10/12 mx-auto">
+        <Navbar />
+        <Outlet />
+      </div>
+      <Footer />
     </>
   );
 };

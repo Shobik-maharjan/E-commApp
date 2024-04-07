@@ -4,17 +4,10 @@ import {
   GET_PRODUCT_ID,
   GET_SINGLE_PRODUCT,
 } from "../constants/productConstant";
-import {
-  collection,
-  deleteDoc,
-  doc,
-  getDoc,
-  getDocs,
-} from "firebase/firestore";
+import { collection, doc, getDoc, getDocs } from "firebase/firestore";
 
 export const getProductDetail = () => async (dispatch) => {
   const querySnapshot = await getDocs(collection(db, "products"));
-  // console.log(querySnapshot.docs);
   const productData = [];
   const productId = [];
   querySnapshot.docs.forEach((doc) => {
@@ -23,11 +16,11 @@ export const getProductDetail = () => async (dispatch) => {
   });
   dispatch({
     type: GET_PRODUCT,
-    payload: productData,
+    payload: [...productData],
   });
   dispatch({
     type: GET_PRODUCT_ID,
-    payload: productId,
+    payload: [...productId],
   });
 };
 

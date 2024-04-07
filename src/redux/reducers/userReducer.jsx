@@ -7,6 +7,7 @@ import {
   LOGIN_USER_SUCCESS,
   LOGOUT_USER,
   REGISTER_USER,
+  USER_DETAILS,
 } from "../constants/userConstant";
 
 const initialData = {
@@ -48,6 +49,11 @@ const userReducer = (state = initialData, action) => {
     case LOGIN_FAIL:
       return {
         userList: [action.payload],
+      };
+    case USER_DETAILS:
+      return {
+        ...state,
+        userList: action.payload,
       };
     default:
       return state;

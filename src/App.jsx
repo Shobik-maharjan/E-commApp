@@ -9,30 +9,24 @@ import UserLayout from "./layout/UserLayout";
 import UserRoute from "./routes/UserRoute";
 import AdminLayout from "./layout/AdminLayout";
 import AdminRoute from "./routes/AdminRoute";
+import ScrollToTop from "./components/ScrollToTop";
 
-// nested route
 const App = () => {
   return (
     <>
       <BrowserRouter>
+        <ScrollToTop />
         <Routes>
           <Route path="login" element={<Login />} />
           <Route path="register" element={<Register />} />
 
+          <Route path="/admin/*" element={<AdminLayout />}>
+            <Route path="*" element={<AdminRoute />} />
+          </Route>
+
           <Route path="/*" element={<UserLayout />}>
             <Route path="*" element={<UserRoute />} />
           </Route>
-
-          <Route path="/admin" element={<AdminLayout />}>
-            <Route path="/admin/*" element={<AdminRoute />} />
-            {/* <Route index element={<Content />} />
-            <Route path="products">
-              <Route index element={<ListProducts />} />
-              <Route path="add" element={<AddProduct />} />
-              <Route path=":product_id" element={<EditProduct />} />
-            </Route> */}
-          </Route>
-          {/* </Route> */}
         </Routes>
         <ToastContainer closeOnClick />
       </BrowserRouter>

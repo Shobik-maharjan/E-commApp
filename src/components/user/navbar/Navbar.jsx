@@ -1,80 +1,121 @@
-import React, { useState } from "react";
-import { Link } from "react-router-dom";
+import React, { useEffect, useState } from "react";
+import { Link, useNavigate } from "react-router-dom";
 import { IoIosNotifications } from "react-icons/io";
 import { RxAvatar } from "react-icons/rx";
 import { FiShoppingCart } from "react-icons/fi";
 import { FaUserTie } from "react-icons/fa";
 import { IoLogOutOutline } from "react-icons/io5";
-import { useDispatch } from "react-redux";
-import { logoutUser } from "../../../redux/actions/userAction";
+import { useDispatch, useSelector } from "react-redux";
+import { currentUser, logoutUser } from "../../../redux/actions/userAction";
 
 const Navbar = () => {
   const dispatch = useDispatch();
+  const navigate = useNavigate();
   const [showLogout, setShowLogout] = useState(false);
 
-  const handleAvatarClick = () => {
-    setShowLogout(!showLogout);
-  };
+  const { userList } = useSelector((state) => state.userList);
+
+  const navLink = ["Home", "Products", "About", "Contact Us"];
+
+  useEffect(() => {
+    dispatch(currentUser());
+  }, []);
 
   return (
     <>
       <nav className="bg-slate-50">
-        <ul className="flex items-center justify-between h-20 mx-8">
-          <li className="logo font-bold text-2xl">
+        <div className="flex items-center justify-between h-20">
+          <div className="logo font-bold text-2xl transition duration-300 hover:scale-110">
             <Link to={"/"}>Shadow Shop</Link>
-          </li>
-          <ul className="flex gap-4  text-xl font-medium">
-            <li>
-              <Link to={"/"}>Home</Link>
-            </li>
-            <li>About</li>
-            <li>Contact Us</li>
-          </ul>
-          <ul className="flex gap-4">
-            <li className="text-3xl">
+          </div>
+          <div className="flex gap-8 text-xl font-medium">
+            {navLink.map((item, i) => (
+              <Link
+                to={`/${item.toLowerCase().replace(" ", "-")}`}
+                className="hover:text-green-800 hover:underline"
+                key={i}
+              >
+                {item}
+              </Link>
+            ))}
+
+            {/* <div>
+              <Link to={"/"} className="hover:text-green-800 hover:underline">
+                Home
+              </Link>
+            </div>
+            <div>
+              <Link
+                to={"/about"}
+                className="hover:text-green-800 hover:underline"
+              >
+                About
+              </Link>
+            </div>
+            <div>
+              <Link
+                to={"/contact"}
+                className="hover:text-green-800 hover:underline"
+              >
+                Contact Us
+              </Link>
+            </div> */}
+          </div>
+          <div className="flex gap-4">
+            <div className="text-3xl">
               <Link>
-                <IoIosNotifications />
+                <IoIosNotifications className="hover:text-green-800" />
               </Link>
-            </li>
-            <li className="text-3xl">
+            </div>
+            <div className="text-3xl">
               <Link to={"/cart"}>
-                <FiShoppingCart />
+                <FiShoppingCart className="hover:text-green-800" />
               </Link>
-            </li>
+            </div>
 
-            <li className="px-2.5 relative">
-              <RxAvatar
-                className="text-3xl cursor-pointer transition-opacity duration-500 ease-in-out"
-                onMouseEnter={() => setShowLogout(true)}
-              />
-              {showLogout && (
-                <div
-                  className={`absolute right-0 overflow-hidden w-fit bg-black/80 p-4 mt-6 min-w-32 cursor-pointer transition-opacity duration-500 ease-in-out opacity-0 ${
-                    showLogout ? "opacity-100" : ""
-                  }`}
-                  onMouseEnter={() => setShowLogout(true)}
-                  onMouseLeave={() => setShowLogout(false)}
-                >
-                  <div className="text-white">
-                    <div className="flex mb-2 items-center hover:underline">
-                      <FaUserTie className="mr-2" />
-                      {/* {user?.displayName} */}
-                      username
-                    </div>
-
+            <div className="px-2.5 relative">
+              {localStorage.getItem("user") ? (
+                <>
+                  <RxAvatar
+                    className="text-3xl cursor-pointer transition-opacity duration-500 ease-in-out hover:text-green-800 "
+                    onMouseEnter={() => setShowLogout(true)}
+                  />
+                  {showLogout && (
                     <div
-                      className="flex items-center cursor-pointer hover:underline"
-                      onClick={() => dispatch(logoutUser())}
+                      className={`absolute right-0 overflow-hidden w-fit bg-black/80 p-4 mt-6 min-w-32 cursor-pointer transition-opacity duration-500 ease-in-out opacity-0 ${
+                        showLogout ? "opacity-100" : ""
+                      }`}
+                      onMouseEnter={() => setShowLogout(true)}
+                      onMouseLeave={() => setShowLogout(false)}
                     >
-                      <IoLogOutOutline className="mr-2" />
-                      Logout
+                      <div className="text-white">
+                        <div className="flex mb-2 items-center hover:underline">
+                          <FaUserTie className="mr-2" />
+                          {/* {user?.displayName} */}
+                          {userList?.username}
+                        </div>
+                        <div
+                          className="flex items-center cursor-pointer hover:underline"
+                          onClick={() => dispatch(logoutUser())}
+                        >
+                          <IoLogOutOutline className="mr-2" />
+                          Logout
+                        </div>
+                      </div>
                     </div>
-                  </div>
+                  )}
+                </>
+              ) : (
+                <div
+                  className="flex items-center cursor-pointer hover:underline text-xl"
+                  onClick={() => navigate("/login")}
+                >
+                  Login
                 </div>
               )}
-            </li>
-          </ul>
-        </ul>
+            </div>
+          </div>
+        </div>
       </nav>
     </>
   );

@@ -14,9 +14,7 @@ const AdminLayout = () => {
   }, [getUser, navigate]);
   return (
     <>
-      <div>
-        <Navbar />
-      </div>
+      <Navbar />
       <div className="flex">
         <Sidebar />
         <div className="w-full">

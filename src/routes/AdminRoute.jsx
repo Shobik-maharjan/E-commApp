@@ -7,16 +7,14 @@ import Content from "../components/admin/content/Content";
 
 const AdminRoute = () => {
   return (
-    <div>
-      <Routes>
-        <Route index element={<Content />} />
-        <Route path="products">
-          <Route index element={<ListProducts />} />
-          <Route path="add" element={<AddProduct />} />
-          <Route path=":product_id" element={<EditProduct />} />
-        </Route>
-      </Routes>
-    </div>
+    <Routes>
+      <Route path="/" element={<Content />} />
+      <Route path="products">
+        <Route index element={<ListProducts />} />
+        <Route path="add" element={<AddProduct />} />
+        <Route path=":product_id" element={<EditProduct />} />
+      </Route>
+    </Routes>
   );
 };
 

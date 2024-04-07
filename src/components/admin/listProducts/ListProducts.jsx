@@ -11,6 +11,7 @@ import { Outlet, useNavigate } from "react-router-dom";
 import ImageComponent from "../../firebase/ImageComponent";
 import { deleteObject, ref } from "firebase/storage";
 import { toast } from "react-toastify";
+import Loading from "../../Loading";
 
 const ListProducts = () => {
   const navigate = useNavigate();
@@ -62,53 +63,57 @@ const ListProducts = () => {
     <>
       <div className="w-full p-4 overflow-y-scroll h-[calc(100vh-80px)] bg-gray-200">
         <h2 className="text-3xl mb-4">Products List</h2>
-        <div id="loading" className={loading ? "display" : ""}></div>
         {loading ? (
-          ""
+          <Loading />
         ) : (
-          <table className="w-full table-auto text-left">
-            <thead className="border-b border-black">
-              <tr className="text-center">
-                <th>Product Name</th>
-                <th>Product Description</th>
-                <th>Price</th>
-                <th>Category</th>
-                <th>Image</th>
-                <th>Quantity</th>
-              </tr>
-            </thead>
+          <div className="w-full text-left">
+            <div className="border-b border-black">
+              <div className=" grid grid-cols-9 gap-2 justify-between text-center">
+                <div>Product Name</div>
+                <div className="col-span-2">Product Description</div>
+                <div>Price</div>
+                <div>Category</div>
+                <div>Image</div>
+                <div className="grid-flow-col">Quantity</div>
+              </div>
+            </div>
 
-            <tbody>
+            <div className="flex flex-col">
               {products.map((list, i) => (
-                <tr className="border-b border-black text-center" key={i}>
-                  <td className="py-4 w-2/12">{list.productName}</td>
-                  <td className="py-4">{list.productDescription}</td>
-                  <td className="py-4">{list.productPrice}</td>
-                  <td className="py-4">{list.category}</td>
-                  <td className="py-4 w-28">
+                <div
+                  className="border-b grid grid-cols-9 gap-2 justify-between items-center border-black text-center"
+                  key={i}
+                >
+                  <div className="py-4">{list.productName}</div>
+                  <div className="py-4 col-span-2">
+                    {list.productDescription}
+                  </div>
+                  <div className="py-4">{list.productPrice}</div>
+                  <div className="py-4">{list.category}</div>
+                  <div className="py-4">
                     <ImageComponent imageName={list.productImage} />
-                  </td>
-                  <td className="py-4 text-center">{list.productQuantity}</td>
-                  <td className="text-center w-fit py-4">
+                  </div>
+                  <div className="py-4 text-center">{list.productQuantity}</div>
+                  <div className="col-span-2 text-center flex gap-4 w-fit">
                     <button
-                      className="bg-red-500 py-1 px-4 rounded mr-4 hover:bg-red-600 text-white"
+                      className="bg-red-500 h-fit py-1 px-4 rounded hover:bg-red-600 text-white"
                       onClick={() => deleteProducts(i)}
                     >
                       Delete
                     </button>
                     <button
-                      className="bg-emerald-500 py-1 px-4 rounded hover:bg-emerald-600 text-white"
+                      className="bg-emerald-500 h-fit py-1 px-4 rounded hover:bg-emerald-600 text-white"
                       onClick={() => {
                         navigate(`${productId[i]}`);
                       }}
                     >
                       Edit
                     </button>
-                  </td>
-                </tr>
+                  </div>
+                </div>
               ))}
-            </tbody>
-          </table>
+            </div>
+          </div>
         )}
       </div>
       {/* <ToastContainer /> */}
