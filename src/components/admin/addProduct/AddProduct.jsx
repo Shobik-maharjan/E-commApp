@@ -1,13 +1,6 @@
 import React, { useRef, useState } from "react";
 import "react-toastify/dist/ReactToastify.css";
-import {
-  addDoc,
-  collection,
-  doc,
-  getDocs,
-  setDoc,
-  updateDoc,
-} from "firebase/firestore";
+import { addDoc, collection } from "firebase/firestore";
 import { db, storage } from "../../../config/firebase";
 import { toast } from "react-toastify";
 import { ref, uploadBytes } from "firebase/storage";
@@ -86,31 +79,6 @@ const AddProduct = () => {
     // console.log("Product added successfully");
   };
 
-  // for updating data
-  // const handleSubmit = async (e) => {
-  //   e.preventDefault();
-  //   const {
-  //     productName,
-  //     productPrice,
-  //     category,
-  //     productQuantity,
-  //     productDescription,
-  //   } = data;
-  //   setDoc(doc(db, "products", "KL6EL202v6GvUYApZ9b4"), {
-  //     productName,
-  //     productPrice,
-  //     category,
-  //     productQuantity,
-  //     productDescription,
-  //   });
-  // const querySnapshot = await getDocs(collection(db, "products"));
-
-  // querySnapshot.forEach((doc) => {
-  //   console.log(`${doc.id}`);
-  //   const docId = doc.id;
-  // });
-  // };
-  // fetchData();
   return (
     <div className="w-full bg-gray-200 product-container overflow-y-scroll">
       <div className="p-4 ">
@@ -145,10 +113,6 @@ const AddProduct = () => {
                     {category}
                   </option>
                 ))}
-                {/* <option value="mobile">Mobile</option>
-                  <option value="laptop">Laptop</option>
-                  <option value="monitor">Monitor</option>
-                  <option value="monitor">Smart Watch</option> */}
               </select>
             </div>
             <div className="mb-4 flex flex-col">

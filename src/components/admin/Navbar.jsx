@@ -1,26 +1,17 @@
 import React, { useState } from "react";
-import { Link, useNavigate } from "react-router-dom";
+import { Link } from "react-router-dom";
 import { IoIosNotifications } from "react-icons/io";
 import { RxAvatar } from "react-icons/rx";
 import { FaUserTie } from "react-icons/fa";
 import { IoLogOutOutline } from "react-icons/io5";
 import { useDispatch } from "react-redux";
-import { logoutUser } from "../../../redux/actions/userAction";
+import { logoutUser } from "../../redux/actions/userAction";
 
 const Navbar = () => {
-  const navigate = useNavigate();
   const dispatch = useDispatch();
 
   const [showLogout, setShowLogout] = useState(false);
 
-  const handleAvatarClick = () => {
-    setShowLogout(!showLogout);
-  };
-
-  const logout = () => {
-    localStorage.clear();
-    navigate("/login");
-  };
   return (
     <>
       <nav className="bg-slate-50">

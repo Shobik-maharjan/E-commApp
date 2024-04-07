@@ -6,7 +6,7 @@ import { FiShoppingCart } from "react-icons/fi";
 import { FaUserTie } from "react-icons/fa";
 import { IoLogOutOutline } from "react-icons/io5";
 import { useDispatch, useSelector } from "react-redux";
-import { currentUser, logoutUser } from "../../../redux/actions/userAction";
+import { currentUser, logoutUser } from "../../redux/actions/userAction";
 
 const Navbar = () => {
   const dispatch = useDispatch();
@@ -28,7 +28,7 @@ const Navbar = () => {
           <div className="logo font-bold text-2xl transition duration-300 hover:scale-110">
             <Link to={"/"}>Shadow Shop</Link>
           </div>
-          <div className="flex gap-8 text-xl font-medium">
+          <div className="flex gap-8 text-lg">
             {navLink.map((item, i) => (
               <Link
                 to={`/${item.toLowerCase().replace(" ", "-")}`}
@@ -38,28 +38,6 @@ const Navbar = () => {
                 {item}
               </Link>
             ))}
-
-            {/* <div>
-              <Link to={"/"} className="hover:text-green-800 hover:underline">
-                Home
-              </Link>
-            </div>
-            <div>
-              <Link
-                to={"/about"}
-                className="hover:text-green-800 hover:underline"
-              >
-                About
-              </Link>
-            </div>
-            <div>
-              <Link
-                to={"/contact"}
-                className="hover:text-green-800 hover:underline"
-              >
-                Contact Us
-              </Link>
-            </div> */}
           </div>
           <div className="flex gap-4">
             <div className="text-3xl">

@@ -1,11 +1,6 @@
-import { push, ref } from "firebase/database";
 import React, { useEffect, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
-import { createUserWithEmailAndPassword } from "firebase/auth";
-import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
-import { auth, db } from "../../../config/firebase";
-import { addDoc, collection } from "firebase/firestore";
 import { useDispatch } from "react-redux";
 import { registerUser } from "../../../redux/actions/userAction";
 
@@ -15,61 +10,13 @@ const Register = () => {
   const [password, setPassword] = useState("");
   const [username, setUsername] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
-  const role = "user";
   const [error, setError] = useState("");
-  const [loading, setLoading] = useState(false);
-  const [userId, setUserId] = useState("");
 
   const dispatch = useDispatch();
 
   const handleSubmit = (e) => {
     e.preventDefault();
     dispatch(registerUser({ email, password, username }));
-
-    // if (email === auth) {
-    //   console.log("email same");
-    //   return;
-    // }
-
-    // if (loading) {
-    //   return;
-    // }
-    // if (
-    //   email !== "" &&
-    //   email !== null &&
-    //   password !== "" &&
-    //   password !== null
-    // ) {
-    //   if (password === confirmPassword) {
-    //     setLoading(true);
-    //     createUserWithEmailAndPassword(auth, email, password)
-    //       .then((userCredential) => {
-    //         const user = userCredential.user;
-    //         toast.success("User registered successfully");
-    //         // setTimeout(() => {
-    //         //   navigate("/protedted");
-    //         // }, 2000);
-    //         setLoading(false);
-
-    //         addDoc(collection(db, "users"), {
-    //           email: user.email,
-    //           password,
-    //           role,
-    //           userId: user.uid,
-    //         });
-    //       })
-    //       .catch((err) => {
-    //         const errorMessage = err.message;
-    //         console.log(err);
-    //         setError(errorMessage);
-    //         setLoading(false);
-    //       });
-    //   } else {
-    //     setError("password and confirmation password do not match.");
-    //   }
-    // } else {
-    //   setError("All field are required");
-    // }
   };
   useEffect(() => {
     if (localStorage.getItem("user")) {

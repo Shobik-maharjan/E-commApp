@@ -10,15 +10,15 @@ import {
   FaTwitter,
 } from "react-icons/fa";
 import logo from "/favicon/android-chrome-192x192.png";
-import Email from "../contact/Email";
-import Phone from "../contact/Phone";
+import Email from "./contact/Email";
+import Phone from "./contact/Phone";
 
 const Footer = () => {
   const quickLink = ["Home", "About", "Contact"];
   const categoryLink = ["Mobile", "Laptop", "Monitor", "Mouse", "Keyboard"];
 
   const copyrightLinks = [
-    "Terns of Use",
+    "Terms of Use",
     // <RxDividerVertical />,
     "Privacy Policy",
     // <RxDividerVertical />,

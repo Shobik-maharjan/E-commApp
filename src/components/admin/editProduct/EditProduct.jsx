@@ -13,11 +13,9 @@ const EditProduct = () => {
     category: "",
     productQuantity: 0,
     productDescription: "",
-    // productImage: "",
   });
   const [error, setError] = useState("");
   const fileInputRef = useRef(null);
-  const [imageUpload, setImageUpload] = useState(null);
   const handleChange = (e) => {
     const { name, value } = e.target;
     setProduct({
@@ -64,17 +62,9 @@ const EditProduct = () => {
       category,
       productQuantity,
       productDescription,
-      //   productImage: `${time}${file.name}`,
     });
     navigate("/admin/products");
     toast.success("Product edited successfully");
-    // console.log("Product edited successfully");
-    // const querySnapshot = await getDocs(collection(db, "products"));
-
-    // querySnapshot.forEach((doc) => {
-    //   console.log(`${doc.id}`);
-    //   const docId = doc.id;
-    // });
   };
   useEffect(() => {
     fetchData();

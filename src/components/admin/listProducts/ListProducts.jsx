@@ -1,12 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { db, storage } from "../../../config/firebase";
-import {
-  collection,
-  deleteDoc,
-  doc,
-  getDoc,
-  getDocs,
-} from "firebase/firestore";
+import { collection, deleteDoc, doc, getDocs } from "firebase/firestore";
 import { Outlet, useNavigate } from "react-router-dom";
 import ImageComponent from "../../firebase/ImageComponent";
 import { deleteObject, ref } from "firebase/storage";
@@ -17,7 +11,6 @@ const ListProducts = () => {
   const navigate = useNavigate();
   const [products, setProducts] = useState([]);
   const [productId, setProductId] = useState([]);
-  const [imageId, setImageId] = useState([]);
   const [loading, setLoading] = useState(false);
 
   const fetchData = async () => {
@@ -48,13 +41,9 @@ const ListProducts = () => {
 
     const imageRef = ref(storage, "productsImage/" + imageId);
     await deleteObject(imageRef);
-    // setTimeout(() => {
     fetchData();
     toast.success("product deleted successfullt");
-    // console.log("product deleted successfully");
-    // }, 2000);
   };
-  //
 
   useEffect(() => {
     fetchData();
@@ -116,7 +105,6 @@ const ListProducts = () => {
           </div>
         )}
       </div>
-      {/* <ToastContainer /> */}
       <Outlet />
     </>
   );
