@@ -14,7 +14,7 @@ import Email from "./contact/Email";
 import Phone from "./contact/Phone";
 
 const Footer = () => {
-  const quickLink = ["Home", "About", "Contact"];
+  const quickLink = ["Home", "About", "Products", "Contact"];
   const categoryLink = ["Mobile", "Laptop", "Monitor", "Mouse", "Keyboard"];
 
   const copyrightLinks = [
@@ -27,16 +27,16 @@ const Footer = () => {
   return (
     <>
       <footer className="bg-slate-100">
-        <div className="w-10/12 mx-auto flex flex-col gap-10 pt-10">
+        <div className="w-10/12 mx-auto flex flex-col gap-8 pt-10">
           <div className="content flex">
             <div className="grid grid-cols-3 items-start justify-between">
               <div className="about flex flex-col gap-6">
-                <div className="about-text flex flex-col gap-3">
+                <div className="about-text flex flex-col gap-4">
                   <p className="font-semibold text-lg">About</p>
                   <p>
-                    Lorem ipsum dolor sit amet consectetur adipisicing elit.
-                    Delectus incidunt veniam ipsum iste, itaque rerum esse non
-                    enim porro nisi!
+                    Welcome to our gadgets website! We're passionate about
+                    technology and gadgets that make our lives easier, more fun,
+                    and more efficient.
                   </p>
                 </div>
                 <Email />
@@ -44,7 +44,7 @@ const Footer = () => {
               </div>
 
               <div className="quick-link flex justify-center gap-20">
-                <div className="flex flex-col gap-6">
+                <div className="flex flex-col gap-4">
                   <h2 className="font-semibold text-lg">Quick Link</h2>
                   <div className="flex flex-col gap-2">
                     {quickLink.map((item, i) => (
@@ -58,13 +58,13 @@ const Footer = () => {
                     ))}
                   </div>
                 </div>
-                <div className="flex flex-col gap-6">
+                <div className="flex flex-col gap-4">
                   <h2 className="font-semibold text-lg">Category</h2>
 
                   <div className="flex flex-col gap-2">
                     {categoryLink.map((item, i) => (
                       <Link
-                        to={`/${item.toLowerCase().replace(" ", "-")}`}
+                        to={`/`}
                         key={i}
                         className="hover:underline hover:text-green-600"
                       >
