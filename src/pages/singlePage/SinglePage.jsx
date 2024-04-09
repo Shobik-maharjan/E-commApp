@@ -3,8 +3,6 @@ import { useDispatch, useSelector } from "react-redux";
 import { useParams } from "react-router-dom";
 import { getSingleProductDetail } from "../../redux/actions/productAction";
 import ImageComponent from "../../components/firebase/ImageComponent";
-import { FaMinus } from "react-icons/fa";
-import { FaPlus } from "react-icons/fa6";
 import { addToCart, getCartData } from "../../redux/actions/cartAction";
 import { toast } from "react-toastify";
 import AddSubBtn from "../../components/user/AddSubBtn";
@@ -17,11 +15,12 @@ const SinglePage = () => {
   const { singleProduct } = useSelector((state) => state.productList);
   const { getCart } = useSelector((state) => state.cartList);
 
+  const [quantity, setQuantity] = useState(1);
+  const [totalPrice, setTotalPrice] = useState(0);
+
   useEffect(() => {
     dispatch(getCartData());
   }, []);
-  const [quantity, setQuantity] = useState(1);
-  const [totalPrice, setTotalPrice] = useState(0);
 
   useEffect(() => {
     dispatch(getSingleProductDetail(id.product_id));

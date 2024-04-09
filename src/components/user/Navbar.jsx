@@ -7,6 +7,7 @@ import { FaUserTie } from "react-icons/fa";
 import { IoLogOutOutline } from "react-icons/io5";
 import { useDispatch, useSelector } from "react-redux";
 import { currentUser, logoutUser } from "../../redux/actions/userAction";
+import { getCartData } from "../../redux/actions/cartAction";
 
 const Navbar = () => {
   const dispatch = useDispatch();
@@ -14,11 +15,14 @@ const Navbar = () => {
   const [showLogout, setShowLogout] = useState(false);
 
   const { userList } = useSelector((state) => state.userList);
+  const { getCart } = useSelector((state) => state.cartList);
+  console.log("🚀 ~ Navbar ~ getCart:", getCart);
 
   const navLink = ["Home", "Products", "About", "Contact Us"];
 
   useEffect(() => {
     dispatch(currentUser());
+    dispatch(getCartData());
   }, []);
 
   return (
@@ -45,9 +49,12 @@ const Navbar = () => {
                 <IoIosNotifications className="hover:text-green-800" />
               </Link>
             </div>
-            <div className="text-3xl">
+            <div className="text-3xl relative">
               <Link to={"/cart"}>
                 <FiShoppingCart className="hover:text-green-800" />
+                <div className="text-sm flex items-center text-center justify-center absolute -top-2 -right-2 w-5 h-5 rounded-full bg-green-500">
+                  {getCart?.length}
+                </div>
               </Link>
             </div>
 

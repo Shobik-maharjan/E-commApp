@@ -56,6 +56,7 @@ export const addToCart =
                 totalQuantity,
               },
             });
+            dispatch(getCartData());
             toast.success("Item added to list");
           } else {
             toast.error("Already added to my list");

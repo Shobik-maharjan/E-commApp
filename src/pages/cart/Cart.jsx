@@ -79,7 +79,7 @@ const Cart = () => {
           <h2 className="font-bold text-2xl my-4">My Cart</h2>
           {getCart && getCart?.length !== 0 ? (
             <div className="grid grid-cols-3 gap-4 mb-10">
-              <div className="flex flex-col col-span-2 gap-4 border p-4 rounded-md">
+              <div className="flex flex-col col-span-2 gap-4 border p-4 rounded-md h-fit">
                 {getCart &&
                   getCart.map((item, index) => (
                     <div key={item.id} className="flex flex-col gap-4">
@@ -121,12 +121,12 @@ const Cart = () => {
                 <div className="flex flex-col gap-4">
                   <h2 className="text-2xl font-semibold">Order Summary</h2>
                   <div className="flex justify-between">
-                    <p>Total</p>
-                    <span className="font-bold">Rs.{totalPrice}</span>
+                    <p>Quantity</p>
+                    <span className="font-semibold">{quantity}</span>
                   </div>
                   <div className="flex justify-between">
-                    <p>Quantity</p>
-                    <span className="font-bold">{quantity}</span>
+                    <p className="font-semibold">Total</p>
+                    <span className="font-semibold">Rs.{totalPrice}</span>
                   </div>
                   <hr />
                 </div>
