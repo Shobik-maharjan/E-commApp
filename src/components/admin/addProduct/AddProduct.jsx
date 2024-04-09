@@ -75,6 +75,14 @@ const AddProduct = () => {
       // console.log("file uploaded");
     });
     setError("");
+    setData({
+      productName: "",
+      productPrice: 0,
+      category: "",
+      productQuantity: 0,
+      productDescription: "",
+      productImage: "",
+    });
     toast.success("Product added successfully");
     // console.log("Product added successfully");
   };

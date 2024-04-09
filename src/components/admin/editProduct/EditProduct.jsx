@@ -1,9 +1,10 @@
 import React, { useEffect, useRef, useState } from "react";
 import "react-toastify/dist/ReactToastify.css";
 import { collection, doc, getDocs, updateDoc } from "firebase/firestore";
-import { db } from "../../../config/firebase";
+import { db, storage } from "../../../config/firebase";
 import { toast } from "react-toastify";
 import { useNavigate, useParams } from "react-router-dom";
+import { deleteObject, ref, uploadBytes } from "firebase/storage";
 const EditProduct = () => {
   const { product_id } = useParams();
   const navigate = useNavigate();
@@ -16,6 +17,8 @@ const EditProduct = () => {
   });
   const [error, setError] = useState("");
   const fileInputRef = useRef(null);
+  const [oldImageName, setOldImageName] = useState("");
+
   const handleChange = (e) => {
     const { name, value } = e.target;
     setProduct({
@@ -34,6 +37,7 @@ const EditProduct = () => {
         data: doc.data(),
       });
     });
+    console.log("🚀 ~ querySnapshot.docs.forEach ~ productData:", productData);
     let selectedProduct = [];
     for (let i = 0; i < productData.length; i++) {
       if (productData[i].id === product_id) {
@@ -42,9 +46,12 @@ const EditProduct = () => {
     }
     if (selectedProduct) {
       setProduct(selectedProduct.data);
+      setOldImageName(selectedProduct.data.productImage);
     }
   };
 
+  console.log(product);
+  console.log("🚀 ~ EditProduct ~ oldImageName:", oldImageName);
   // for updating data
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -54,15 +61,49 @@ const EditProduct = () => {
       category,
       productQuantity,
       productDescription,
-      //   productImage,
+      productImage,
     } = product;
-    await updateDoc(doc(db, "products", product_id), {
-      productName,
-      productPrice,
-      category,
-      productQuantity,
-      productDescription,
-    });
+    console.log("🚀 ~ handleSubmit ~ oldImageName:", oldImageName);
+
+    const fileInput = fileInputRef.current;
+    const file = fileInput.files[0];
+
+    if (file) {
+      if (oldImageName) {
+        const oldImageRef = ref(storage, `productsImage/${oldImageName}`);
+        await deleteObject(oldImageRef);
+      }
+
+      const imageName = `${time}${file.name}`;
+
+      const storageRef = ref(storage, `productsImage/${imageName}`);
+      uploadBytes(storageRef, file).then((snapshot) => {
+        productImage;
+        console.log("file uploaded");
+      });
+
+      setProduct({
+        ...product,
+        productImage: imageName,
+      });
+
+      await updateDoc(doc(db, "products", product_id), {
+        productName,
+        productPrice,
+        category,
+        productQuantity,
+        productDescription,
+        productImage: `${imageName}`,
+      });
+    } else {
+      await updateDoc(doc(db, "products", product_id), {
+        productName,
+        productPrice,
+        category,
+        productQuantity,
+        productDescription,
+      });
+    }
     navigate("/admin/products");
     toast.success("Product edited successfully");
   };

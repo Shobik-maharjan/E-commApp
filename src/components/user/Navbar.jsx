@@ -53,7 +53,7 @@ const Navbar = () => {
               <Link to={"/cart"}>
                 <FiShoppingCart className="hover:text-green-800" />
                 <div className="text-sm flex items-center text-center justify-center absolute -top-2 -right-2 w-5 h-5 rounded-full bg-green-500">
-                  {getCart?.length}
+                  {getCart ? getCart?.length : 0}
                 </div>
               </Link>
             </div>
