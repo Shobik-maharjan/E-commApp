@@ -14,6 +14,12 @@
   margin: 0;
 }
 
+input:focus,
+textarea:focus,
+select:focus {
+  outline: none;
+}
+
 input::file-selector-button {
   background-color: rgb(16 185 129);
   color: white;

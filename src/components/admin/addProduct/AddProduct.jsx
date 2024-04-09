@@ -60,7 +60,7 @@ const AddProduct = () => {
       return;
     }
     const time = Date.now();
-    const dataBase = await addDoc(collection(db, "products"), {
+    await addDoc(collection(db, "products"), {
       productName,
       productPrice,
       category,
@@ -84,7 +84,6 @@ const AddProduct = () => {
       productImage: "",
     });
     toast.success("Product added successfully");
-    // console.log("Product added successfully");
   };
 
   return (

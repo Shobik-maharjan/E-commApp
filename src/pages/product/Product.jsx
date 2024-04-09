@@ -27,7 +27,7 @@ const Product = () => {
             products.slice(0, productToShow).map((item, i) => (
               <div key={i}>
                 <Card
-                  product_id={productId[i]}
+                  product_id={item.pid}
                   productImage={item.productImage}
                   productName={item.productName}
                   productPrice={item.productPrice}

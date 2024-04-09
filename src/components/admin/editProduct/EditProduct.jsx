@@ -37,7 +37,6 @@ const EditProduct = () => {
         data: doc.data(),
       });
     });
-    console.log("🚀 ~ querySnapshot.docs.forEach ~ productData:", productData);
     let selectedProduct = [];
     for (let i = 0; i < productData.length; i++) {
       if (productData[i].id === product_id) {
@@ -46,12 +45,10 @@ const EditProduct = () => {
     }
     if (selectedProduct) {
       setProduct(selectedProduct.data);
-      setOldImageName(selectedProduct.data.productImage);
+      setOldImageName(selectedProduct?.data?.productImage);
     }
   };
 
-  console.log(product);
-  console.log("🚀 ~ EditProduct ~ oldImageName:", oldImageName);
   // for updating data
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -63,7 +60,6 @@ const EditProduct = () => {
       productDescription,
       productImage,
     } = product;
-    console.log("🚀 ~ handleSubmit ~ oldImageName:", oldImageName);
 
     const fileInput = fileInputRef.current;
     const file = fileInput.files[0];
