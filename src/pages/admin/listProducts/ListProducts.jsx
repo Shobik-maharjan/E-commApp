@@ -1,13 +1,13 @@
-import React, { useEffect, useState } from "react";
-import { db, storage } from "../../../config/firebase";
+import React, { useEffect } from "react";
 import { deleteDoc, doc, getDoc } from "firebase/firestore";
 import { Outlet, useNavigate } from "react-router-dom";
-import ImageComponent from "../../firebase/ImageComponent";
 import { deleteObject, ref } from "firebase/storage";
 import { toast } from "react-toastify";
-import Loading from "../../Loading";
 import { useDispatch, useSelector } from "react-redux";
-import { getProductDetail } from "../../../redux/actions/productAction";
+import { getProductDetail } from "src/redux/actions/productAction";
+import Loading from "src/components/Loading";
+import ImageComponent from "src/components/firebase/ImageComponent";
+import { db, storage } from "src/config/firebase";
 
 const ListProducts = () => {
   const navigate = useNavigate();

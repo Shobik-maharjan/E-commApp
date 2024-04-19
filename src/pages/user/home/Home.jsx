@@ -1,11 +1,11 @@
 import React, { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { getProductDetail } from "../../redux/actions/productAction";
 import { useNavigate } from "react-router-dom";
-import Card from "../../components/Card";
-import TopPart from "../../components/user/TopPart";
-import Delivery from "../../components/user/Delivery";
-import Loading from "../../components/Loading";
+import { getProductDetail } from "src/redux/actions/productAction";
+import Card from "src/components/Card";
+import Loading from "src/components/Loading";
+import Delivery from "src/components/user/Delivery";
+import TopPart from "src/components/user/TopPart";
 
 const Home = () => {
   const dispatch = useDispatch();

@@ -1,11 +1,11 @@
 import React from "react";
 import { Route, Routes } from "react-router-dom";
-import Home from "../pages/home/Home";
-import SinglePage from "../pages/singlePage/SinglePage";
-import Cart from "../pages/cart/Cart";
-import About from "../pages/about/About";
-import Contact from "../pages/contact/Contact";
-import Product from "../pages/product/Product";
+import About from "src/pages/user/about/About";
+import Cart from "src/pages/user/cart/Cart";
+import Contact from "src/pages/user/contact/Contact";
+import Home from "src/pages/user/home/Home";
+import Product from "src/pages/user/product/Product";
+import SinglePage from "src/pages/user/singlePage/SinglePage";
 
 const UserRoute = () => {
   return (

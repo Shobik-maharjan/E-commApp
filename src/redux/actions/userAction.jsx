@@ -1,12 +1,16 @@
-import { createUserWithEmailAndPassword, updateProfile } from "firebase/auth";
-import { doc, setDoc } from "firebase/firestore";
+import {
+  createUserWithEmailAndPassword,
+  signInWithEmailAndPassword,
+  updateProfile,
+} from "firebase/auth";
+import { doc, getDoc, setDoc } from "firebase/firestore";
 import { REGISTER_USER, USER_DETAILS } from "../constants/userConstant";
 import { REGISTER_FAIL } from "../constants/productConstant";
-import { auth, db } from "../../config/firebase";
+import { auth, db } from "src/config/firebase";
 import { toast } from "react-toastify";
 
 export const registerUser =
-  ({ email, password, username }) =>
+  ({ email, password, username, navigate, setError }) =>
   async (dispatch) => {
     try {
       const users = await createUserWithEmailAndPassword(auth, email, password);
@@ -17,7 +21,6 @@ export const registerUser =
       const user = {
         email: users.user.email,
         username,
-        password,
         uid: users.user.uid,
         role: "user",
       };
@@ -36,14 +39,43 @@ export const registerUser =
       }, 500);
 
       setTimeout(() => {
-        window.location.href = "/login";
+        navigate("/login");
       }, 2000);
     } catch (error) {
       dispatch({
         type: REGISTER_FAIL,
-        payload: error,
       });
+      setError(error.message);
       console.log(error);
+    }
+  };
+
+export const loginUser =
+  ({ email, password, navigate, setError }) =>
+  async (dispatch) => {
+    try {
+      const userCrediental = await signInWithEmailAndPassword(
+        auth,
+        email,
+        password
+      );
+      const user = userCrediental.user;
+      const querySnapshot = await getDoc(doc(db, "users", user.uid));
+      if (querySnapshot) {
+        const userData = querySnapshot.data();
+        localStorage.clear();
+
+        if (userData.user.role === "admin") {
+          localStorage.setItem("admin", user.accessToken);
+          navigate("/admin");
+        } else {
+          localStorage.setItem("user", user.accessToken);
+          navigate("/");
+        }
+        toast.success("Login successful");
+      }
+    } catch (error) {
+      setError("Invalid-Credential");
     }
   };
 

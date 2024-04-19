@@ -4,7 +4,6 @@ import { CiMail } from "react-icons/ci";
 import {
   FaFacebookF,
   FaInstagram,
-  FaInstagramSquare,
   FaLinkedin,
   FaRegCopyright,
   FaTwitter,

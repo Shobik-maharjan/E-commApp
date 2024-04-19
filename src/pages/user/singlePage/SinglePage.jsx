@@ -1,12 +1,12 @@
 import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useParams } from "react-router-dom";
-import { getSingleProductDetail } from "../../redux/actions/productAction";
-import ImageComponent from "../../components/firebase/ImageComponent";
-import { addToCart, getCartData } from "../../redux/actions/cartAction";
 import { toast } from "react-toastify";
-import AddSubBtn from "../../components/user/AddSubBtn";
-import Recommendation from "../../components/user/Recommendation";
+import ImageComponent from "src/components/firebase/ImageComponent";
+import AddSubBtn from "src/components/user/AddSubBtn";
+import Recommendation from "src/components/user/Recommendation";
+import { addToCart, getCartData } from "src/redux/actions/cartAction";
+import { getSingleProductDetail } from "src/redux/actions/productAction";
 
 const SinglePage = () => {
   const id = useParams();

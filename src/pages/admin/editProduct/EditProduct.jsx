@@ -1,7 +1,7 @@
 import React, { useEffect, useRef, useState } from "react";
 import "react-toastify/dist/ReactToastify.css";
 import { collection, doc, getDocs, updateDoc } from "firebase/firestore";
-import { db, storage } from "../../../config/firebase";
+import { db, storage } from "src/config/firebase";
 import { toast } from "react-toastify";
 import { useNavigate, useParams } from "react-router-dom";
 import { deleteObject, ref, uploadBytes } from "firebase/storage";
@@ -75,7 +75,7 @@ const EditProduct = () => {
       const storageRef = ref(storage, `productsImage/${imageName}`);
       uploadBytes(storageRef, file).then((snapshot) => {
         productImage;
-        console.log("file uploaded");
+        // console.log("file uploaded");
       });
 
       setProduct({

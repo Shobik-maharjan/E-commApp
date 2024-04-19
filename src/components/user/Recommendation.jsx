@@ -2,7 +2,7 @@ import React, { useEffect } from "react";
 import Card from "../Card";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
-import { getProductDetail } from "../../redux/actions/productAction";
+import { getProductDetail } from "src/redux/actions/productAction";
 
 const Recommendation = () => {
   const dispatch = useDispatch();

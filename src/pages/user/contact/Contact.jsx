@@ -1,7 +1,7 @@
 import React from "react";
-import Location from "../../components/user/contact/Location";
-import Email from "../../components/user/contact/Email";
-import Phone from "../../components/user/contact/Phone";
+import Location from "components/user/contact/Location";
+import Email from "components/user/contact/Email";
+import Phone from "components/user/contact/Phone";
 
 const Contact = () => {
   return (

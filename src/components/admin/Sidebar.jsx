@@ -28,7 +28,7 @@ const Sidebar = () => {
           </Link>
         </li>
         <li>
-          <Link>
+          <Link to={"products/category"}>
             <button className="p-2.5 my-2 hover:bg-emerald-500 hover:text-white rounded-lg w-full text-left">
               Category
             </button>

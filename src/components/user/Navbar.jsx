@@ -6,8 +6,8 @@ import { FiShoppingCart } from "react-icons/fi";
 import { FaUserTie } from "react-icons/fa";
 import { IoLogOutOutline } from "react-icons/io5";
 import { useDispatch, useSelector } from "react-redux";
-import { currentUser, logoutUser } from "../../redux/actions/userAction";
-import { getCartData } from "../../redux/actions/cartAction";
+import { currentUser, logoutUser } from "src/redux/actions/userAction";
+import { getCartData } from "src/redux/actions/cartAction";
 
 const Navbar = () => {
   const dispatch = useDispatch();
@@ -16,7 +16,6 @@ const Navbar = () => {
 
   const { userList } = useSelector((state) => state.userList);
   const { getCart } = useSelector((state) => state.cartList);
-  console.log("🚀 ~ Navbar ~ getCart:", getCart);
 
   const navLink = ["Home", "Products", "About", "Contact Us"];
 
@@ -28,7 +27,7 @@ const Navbar = () => {
   return (
     <>
       <nav className="bg-slate-50">
-        <div className="flex items-center justify-between h-20">
+        <div className="flex items-center justify-between h-20 w-10/12 mx-auto">
           <div className="logo font-bold text-2xl transition duration-300 hover:scale-110">
             <Link to={"/"}>Shadow Shop</Link>
           </div>
@@ -52,7 +51,7 @@ const Navbar = () => {
             <div className="text-3xl relative">
               <Link to={"/cart"}>
                 <FiShoppingCart className="hover:text-green-800" />
-                <div className="text-sm flex items-center text-center justify-center absolute -top-2 -right-2 w-5 h-5 rounded-full bg-green-500">
+                <div className="text-sm inline-flex items-center text-center justify-center absolute -top-2 -end-2 w-5 h-5 font-medium rounded-full bg-green-500">
                   {getCart ? getCart?.length : 0}
                 </div>
               </Link>
@@ -76,7 +75,6 @@ const Navbar = () => {
                       <div className="text-white">
                         <div className="flex mb-2 items-center hover:underline">
                           <FaUserTie className="mr-2" />
-                          {/* {user?.displayName} */}
                           {userList?.username}
                         </div>
                         <div

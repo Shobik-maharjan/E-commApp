@@ -5,27 +5,33 @@ import { RxAvatar } from "react-icons/rx";
 import { FaUserTie } from "react-icons/fa";
 import { IoLogOutOutline } from "react-icons/io5";
 import { useDispatch } from "react-redux";
-import { logoutUser } from "../../redux/actions/userAction";
-import { getSearchProduct } from "../../redux/actions/productAction";
+import { getSearchProduct } from "src/redux/actions/productAction";
+import { currentUser, logoutUser } from "src/redux/actions/userAction";
+import { useSelector } from "react-redux";
 
 const Navbar = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const [search, setSearch] = useState("");
+  const [showLogout, setShowLogout] = useState(false);
+
+  const { userList } = useSelector((state) => state.userList);
 
   const handleSearch = (e) => {
     let searchQuery = e.target.value;
     setSearch(searchQuery);
-    setTimeout(() => {
-      dispatch(getSearchProduct({ prodName: searchQuery }));
-    }, 1000);
+    dispatch(getSearchProduct({ prodName: searchQuery }));
   };
 
   useEffect(() => {
-    setSearch("");
-  }, [navigate]);
+    dispatch(currentUser());
+  }, []);
 
-  const [showLogout, setShowLogout] = useState(false);
+  useEffect(() => {
+    setTimeout(() => {
+      setSearch("");
+    }, 1000);
+  }, [navigate, dispatch]);
 
   return (
     <>
@@ -66,8 +72,7 @@ const Navbar = () => {
                 <div className="text-white">
                   <div className="flex mb-2 items-center hover:underline">
                     <FaUserTie className="mr-2" />
-                    {/* {user?.displayName} */}
-                    username
+                    {userList?.username}
                   </div>
 
                   <div

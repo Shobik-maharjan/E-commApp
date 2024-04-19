@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { getStorage, ref, getDownloadURL } from "firebase/storage";
-import { storage } from "../../config/firebase";
+import { storage } from "src/config/firebase";
 
 const ImageComponent = ({ imageName, width, height }) => {
   const [imageURL, setImageURL] = useState(null);

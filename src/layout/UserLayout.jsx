@@ -1,13 +1,13 @@
 import React from "react";
 import { Outlet } from "react-router-dom";
-import Navbar from "../components/user/Navbar";
-import Footer from "../components/user/Footer";
+import Footer from "src/components/user/Footer";
+import Navbar from "src/components/user/Navbar";
 
 const UserLayout = () => {
   return (
     <>
+      <Navbar />
       <div className="w-10/12 mx-auto">
-        <Navbar />
         <Outlet />
       </div>
       <Footer />

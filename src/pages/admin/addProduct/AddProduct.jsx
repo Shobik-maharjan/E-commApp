@@ -1,15 +1,15 @@
 import React, { useRef, useState } from "react";
 import "react-toastify/dist/ReactToastify.css";
 import { addDoc, collection } from "firebase/firestore";
-import { db, storage } from "../../../config/firebase";
 import { toast } from "react-toastify";
 import { ref, uploadBytes } from "firebase/storage";
+import { db, storage } from "src/config/firebase";
 const AddProduct = () => {
   const [data, setData] = useState({
     productName: "",
-    productPrice: 0,
+    productPrice: "",
     category: "",
-    productQuantity: 0,
+    productQuantity: "",
     productDescription: "",
     productImage: "",
   });
@@ -77,12 +77,13 @@ const AddProduct = () => {
     setError("");
     setData({
       productName: "",
-      productPrice: 0,
+      productPrice: "",
       category: "",
-      productQuantity: 0,
+      productQuantity: "",
       productDescription: "",
       productImage: "",
     });
+    fileInputRef.current.value = "";
     toast.success("Product added successfully");
   };
 
@@ -99,6 +100,7 @@ const AddProduct = () => {
                 type="text"
                 id="productName"
                 name="productName"
+                value={data.productName}
                 className="border border-black rounded-md p-2"
                 onChange={handleChange}
               />
@@ -130,6 +132,7 @@ const AddProduct = () => {
                 rows="5"
                 id="productDescription"
                 name="productDescription"
+                value={data.productDescription}
                 className="border border-black rounded-md p-2"
                 onChange={handleChange}
               />
@@ -145,6 +148,7 @@ const AddProduct = () => {
                 id="productPrice"
                 name="productPrice"
                 min={0}
+                value={data.productPrice}
                 className="border border-black rounded-md p-2 remove-arrow"
                 onChange={handleChange}
               />
@@ -157,6 +161,7 @@ const AddProduct = () => {
                 id="productQuantity"
                 name="productQuantity"
                 min={0}
+                value={data.productQuantity}
                 className="border border-black rounded-md p-2 remove-arrow"
                 onChange={handleChange}
               />

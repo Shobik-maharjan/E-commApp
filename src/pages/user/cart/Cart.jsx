@@ -1,14 +1,13 @@
 import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { deleteCardData, getCartData } from "../../redux/actions/cartAction";
-import { Link, useNavigate } from "react-router-dom";
-import ImageComponent from "../../components/firebase/ImageComponent";
-import Card from "../../components/Card";
-import Loading from "../../components/Loading";
+import { useNavigate } from "react-router-dom";
+import { deleteCardData, getCartData } from "src/redux/actions/cartAction";
+import Loading from "components/Loading";
 import { RiDeleteBinFill } from "react-icons/ri";
-import AddSubBtn from "../../components/user/AddSubBtn";
-import { getProductDetail } from "../../redux/actions/productAction";
+import AddSubBtn from "components/user/AddSubBtn";
+import { getProductDetail } from "src/redux/actions/productAction";
 import { FaArrowRightLong } from "react-icons/fa6";
+import ImageComponent from "components/firebase/ImageComponent";
 
 const Cart = () => {
   const dispatch = useDispatch();
@@ -19,7 +18,6 @@ const Cart = () => {
     dispatch(getCartData());
   }, []);
 
-  console.log("🚀 ~ Cart ~ getCart:", getCart);
   useEffect(() => {
     dispatch(getProductDetail());
   }, []);
@@ -45,7 +43,6 @@ const Cart = () => {
   }, [getCart]);
 
   const deleteCart = (id) => {
-    console.log(id);
     dispatch(deleteCardData(id));
   };
 
@@ -103,11 +100,15 @@ const Cart = () => {
                               <AddSubBtn
                                 btnSize={"text-base"}
                                 productQuantity={item.productQuantity}
+                                quantity={item.totalQuantity}
                                 onChange={(quantity) =>
                                   handleQuantityChange(quantity, item.id)
                                 }
                               />
                             </div>
+                            {/* <button className="px-3 py-1.5 bg-green-600 rounded-md text-white">
+                              Save
+                            </button> */}
                           </div>
                         </div>
                       </div>

@@ -1,4 +1,4 @@
-import { db } from "../../config/firebase";
+import { db } from "src/config/firebase";
 import {
   GET_PRODUCT,
   GET_SINGLE_PRODUCT,
@@ -37,7 +37,6 @@ export const getProductDetail = () => async (dispatch) => {
 export const getSingleProductDetail = (id) => async (dispatch) => {
   const querySnapshot = await getDoc(doc(db, "products", id));
   const singleProduct = querySnapshot.data();
-  // console.log(querySnapshot.data());
   dispatch({
     type: GET_SINGLE_PRODUCT,
     payload: singleProduct,
@@ -45,20 +44,33 @@ export const getSingleProductDetail = (id) => async (dispatch) => {
 };
 
 export const getSearchProduct =
-  ({ prodName }) =>
+  ({ prodName, category }) =>
   async (dispatch) => {
     try {
       const productRef = collection(db, "products");
       const querySnapshot = await getDocs(productRef);
 
-      const products = querySnapshot.docs
-        .map((doc) => ({
-          pid: doc.id, // Include the document ID in the product data
-          ...doc.data(),
-        }))
-        .filter((product) =>
+      let products = querySnapshot.docs.map((doc) => ({
+        pid: doc.id, // Include the document ID in the product data
+        ...doc.data(),
+      }));
+
+      if (prodName && !category) {
+        products = products.filter((product) =>
           product.productName.toLowerCase().includes(prodName.toLowerCase())
         );
+      } else if (!prodName && category) {
+        products = products.filter((product) => product.category === category);
+      } else {
+        // Both search query and category
+        products = products.filter(
+          (product) =>
+            product.productName
+              .toLowerCase()
+              .includes(prodName.toLowerCase()) &&
+            (category ? product.category === category : true)
+        );
+      }
 
       dispatch({
         type: SEARCH_PRODUCT,

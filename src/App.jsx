@@ -1,15 +1,15 @@
 import React from "react";
 import { BrowserRouter, Route, Routes } from "react-router-dom";
 import "./App.css";
-import Login from "./components/admin/login/Login";
-import Register from "./components/user/register/Register";
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
-import UserLayout from "./layout/UserLayout";
-import UserRoute from "./routes/UserRoute";
+import ScrollToTop from "./components/ScrollToTop";
+import Register from "./components/Register";
 import AdminLayout from "./layout/AdminLayout";
 import AdminRoute from "./routes/AdminRoute";
-import ScrollToTop from "./components/ScrollToTop";
+import UserLayout from "./layout/UserLayout";
+import UserRoute from "./routes/UserRoute";
+import Login from "./components/Login";
 
 const App = () => {
   return (

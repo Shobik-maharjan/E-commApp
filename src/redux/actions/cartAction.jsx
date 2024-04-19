@@ -1,5 +1,4 @@
 import { onAuthStateChanged } from "firebase/auth";
-import { auth, db } from "../../config/firebase";
 import {
   arrayRemove,
   arrayUnion,
@@ -15,6 +14,7 @@ import {
   GET_CART,
 } from "../constants/cartConstant";
 import { toast } from "react-toastify";
+import { auth, db } from "src/config/firebase";
 
 export const addToCart =
   ({
