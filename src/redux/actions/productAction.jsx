@@ -35,18 +35,31 @@ export const getProductDetail = () => async (dispatch) => {
 };
 
 export const getSingleProductDetail = (id) => async (dispatch) => {
-  const querySnapshot = await getDoc(doc(db, "products", id));
-  const singleProduct = querySnapshot.data();
-  dispatch({
-    type: GET_SINGLE_PRODUCT,
-    payload: singleProduct,
-  });
+  try {
+    dispatch({
+      type: PRODUCT_REQUEST,
+    });
+    const querySnapshot = await getDoc(doc(db, "products", id));
+    const singleProduct = querySnapshot.data();
+    dispatch({
+      type: GET_SINGLE_PRODUCT,
+      payload: singleProduct,
+    });
+    dispatch({
+      type: PRODUCT_REQUEST_SUCCESS,
+    });
+  } catch (error) {
+    console.log(error);
+  }
 };
 
 export const getSearchProduct =
   ({ prodName, category }) =>
   async (dispatch) => {
     try {
+      dispatch({
+        type: PRODUCT_REQUEST,
+      });
       const productRef = collection(db, "products");
       const querySnapshot = await getDocs(productRef);
 
@@ -75,6 +88,9 @@ export const getSearchProduct =
       dispatch({
         type: SEARCH_PRODUCT,
         payload: products,
+      });
+      dispatch({
+        type: PRODUCT_REQUEST_SUCCESS,
       });
     } catch (e) {
       console.log(e);

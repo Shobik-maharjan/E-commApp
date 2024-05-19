@@ -1,7 +1,11 @@
 import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { useNavigate } from "react-router-dom";
-import { deleteCardData, getCartData } from "src/redux/actions/cartAction";
+import { Link, useNavigate } from "react-router-dom";
+import {
+  deleteCardData,
+  getCartData,
+  updateCartData,
+} from "src/redux/actions/cartAction";
 import Loading from "components/Loading";
 import { RiDeleteBinFill } from "react-icons/ri";
 import AddSubBtn from "components/user/AddSubBtn";
@@ -24,8 +28,8 @@ const Cart = () => {
 
   const [quantity, setQuantity] = useState(1);
   const [totalPrice, setTotalPrice] = useState(0);
-
   const [cartItems, setCartItems] = useState([]);
+  const [updatedQuantity, setUpdatedQuantity] = useState();
 
   useEffect(() => {
     // Calculate total price and quantity whenever cart items change
@@ -47,10 +51,15 @@ const Cart = () => {
   };
 
   const handleQuantityChange = (newQuantity, itemId) => {
+    setUpdatedQuantity(newQuantity);
     // Find the item in cartItems and update its quantity
     const updatedCartItems = cartItems.map((item) => {
       if (item.id === itemId) {
-        item.totalQuantity = newQuantity;
+        return {
+          ...item,
+          totalQuantity: newQuantity,
+        };
+        // item.totalQuantity = newQuantity;
       }
       return item;
     });
@@ -67,6 +76,10 @@ const Cart = () => {
     setTotalPrice(total);
   };
 
+  const updateCart = (id) => {
+    dispatch(updateCartData(id, updatedQuantity));
+  };
+
   return (
     <>
       {loading ? (
@@ -75,22 +88,26 @@ const Cart = () => {
         <>
           <h2 className="font-bold text-2xl my-4">My Cart</h2>
           {getCart && getCart?.length !== 0 ? (
-            <div className="grid grid-cols-3 gap-4 mb-10">
-              <div className="flex flex-col col-span-2 gap-4 border p-4 rounded-md h-fit">
+            <div className="grid md:grid-cols-3 gap-4 mb-10">
+              <div className="flex flex-col md:col-span-2 gap-4 border p-4 rounded-md h-fit">
                 {getCart &&
                   getCart.map((item, index) => (
                     <div key={item.id} className="flex flex-col gap-4">
                       <div className="flex items-center gap-4 w-full">
-                        <ImageComponent
-                          imageName={item.productImage}
-                          width={"w-48"}
-                          height={"h-32"}
-                        />
+                        <Link to={`/product/${item.id}`}>
+                          <ImageComponent
+                            imageName={item.productImage}
+                            width={"w-48"}
+                            height={"h-32"}
+                          />
+                        </Link>
                         <div className="flex justify-between gap-4 w-full">
-                          <div>
-                            <h2 className="font-bold">{item.productName}</h2>
-                            <span>Rs.{item.productPrice}</span>
-                          </div>
+                          <Link to={`/product/${item.id}`}>
+                            <div>
+                              <h2 className="font-bold">{item.productName}</h2>
+                              <span>Rs.{item.productPrice}</span>
+                            </div>
+                          </Link>
                           <div className="flex flex-col items-center justify-start gap-1">
                             <RiDeleteBinFill
                               onClick={() => deleteCart(item)}
@@ -106,9 +123,12 @@ const Cart = () => {
                                 }
                               />
                             </div>
-                            {/* <button className="px-3 py-1.5 bg-green-600 rounded-md text-white">
-                              Save
-                            </button> */}
+                            <button
+                              onClick={() => updateCart({ id: item.id })}
+                              className="px-3 py-1.5 bg-green-600 rounded-md text-white"
+                            >
+                              Update
+                            </button>
                           </div>
                         </div>
                       </div>

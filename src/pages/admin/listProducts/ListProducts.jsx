@@ -39,7 +39,7 @@ const ListProducts = () => {
         ) : (
           <div className="w-full text-left">
             <div className="border-b border-black">
-              <div className=" grid grid-cols-9 gap-2 justify-between text-center">
+              <div className=" grid grid-cols-8 gap-2 justify-between text-center">
                 <div>Product Name</div>
                 <div className="col-span-2">Product Description</div>
                 <div>Price</div>
@@ -52,7 +52,7 @@ const ListProducts = () => {
             <div className="flex flex-col">
               {(searchProducts || products || []).map((list, i) => (
                 <div
-                  className="border-b grid grid-cols-9 gap-2 justify-between items-center border-black text-center"
+                  className="border-b grid grid-cols-8 gap-2 justify-between items-center border-black text-center"
                   key={i}
                 >
                   <div className="py-4">{list.productName}</div>
@@ -65,13 +65,7 @@ const ListProducts = () => {
                     <ImageComponent imageName={list.productImage} />
                   </div>
                   <div className="py-4 text-center">{list.productQuantity}</div>
-                  <div className="col-span-2 text-center flex gap-4 w-fit">
-                    <button
-                      className="bg-red-500 h-fit py-1 px-4 rounded hover:bg-red-600 text-white"
-                      onClick={() => deleteProducts(list.pid)}
-                    >
-                      Delete
-                    </button>
+                  <div className="col-span-1 text-center flex flex-col gap-4 w-fit">
                     <button
                       className="bg-emerald-500 h-fit py-1 px-4 rounded hover:bg-emerald-600 text-white"
                       onClick={() => {
@@ -79,6 +73,12 @@ const ListProducts = () => {
                       }}
                     >
                       Edit
+                    </button>
+                    <button
+                      className="bg-red-500 h-fit py-1 px-4 rounded hover:bg-red-600 text-white"
+                      onClick={() => deleteProducts(list.pid)}
+                    >
+                      Delete
                     </button>
                   </div>
                 </div>

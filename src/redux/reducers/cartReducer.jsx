@@ -4,6 +4,7 @@ import {
   CART_REQUEST_FAIL,
   CART_REQUEST_SUCCESS,
   GET_CART,
+  UPDATE_CART,
 } from "../constants/cartConstant";
 
 const initialData = {
@@ -21,6 +22,11 @@ const cartReducer = (state = initialData, action) => {
       return {
         ...state,
         getCart: action.payload,
+      };
+    case UPDATE_CART:
+      return {
+        ...state,
+        updatedCart: action.payload,
       };
     case CART_REQUEST:
       return {

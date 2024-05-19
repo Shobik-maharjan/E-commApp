@@ -29,7 +29,7 @@ const AddSubBtn = ({ btnSize, productQuantity, quantity = 1, onChange }) => {
     }
   };
   return (
-    <div className="quantity flex items-center justify-around gap-4 w-1/2">
+    <div className="quantity flex items-center justify-around gap-4 sm:w-2/4 md:w-3/4">
       <FaMinus
         onClick={decreaseQuantity}
         className={`${btnSize} cursor-pointer`}
@@ -40,7 +40,7 @@ const AddSubBtn = ({ btnSize, productQuantity, quantity = 1, onChange }) => {
         id="quantity"
         value={changeQuantity}
         onChange={handleQuantityChange}
-        className={`text-center font-bold w-1/4 p-2 ${btnSize}`}
+        className={`text-center font-bold w-3/4 p-2 ${btnSize}`}
       />
       {/* <span className="text-2xl">{quantity}</span> */}
       <FaPlus onClick={addQuantity} className={`${btnSize} cursor-pointer`} />

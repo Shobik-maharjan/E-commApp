@@ -23,8 +23,8 @@ const Delivery = () => {
   ];
   return (
     <>
-      <div className="w-11/12 mx-auto flex justify-between my-10">
-        <div className="delivery flex gap-20">
+      <div className="mx-auto flex justify-between my-10">
+        <div className="delivery flex flex-col md:flex-row gap-20">
           {data.map((item, i) => (
             <div className="flex flex-col gap-8 text-center" key={i}>
               <div className="bg-slate-300 w-fit p-3 rounded-full  mx-auto">

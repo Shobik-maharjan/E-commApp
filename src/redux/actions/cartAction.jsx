@@ -12,6 +12,7 @@ import {
   CART_REQUEST_FAIL,
   CART_REQUEST_SUCCESS,
   GET_CART,
+  UPDATE_CART,
 } from "../constants/cartConstant";
 import { toast } from "react-toastify";
 import { auth, db } from "src/config/firebase";
@@ -67,6 +68,30 @@ export const addToCart =
       console.log(error);
     }
   };
+
+export const updateCartData = (id, updatedQuantity) => () => {
+  try {
+    console.log("🚀 ~ updateCartData ~ id:", id);
+    onAuthStateChanged(auth, async (user) => {
+      if (user) {
+        const userId = user.uid;
+        const docRef = doc(db, "users", userId);
+        const docSnap = await getDoc(docRef);
+        const myCart = docSnap?.data()?.myCart;
+
+        const index = myCart?.findIndex((item) => item.id === id.id);
+        if (index !== -1) {
+          myCart[index].totalQuantity = updatedQuantity;
+          await updateDoc(docRef, {
+            myCart: myCart,
+          });
+        }
+      }
+    });
+  } catch (error) {
+    console.log(error);
+  }
+};
 
 export const getCartData = () => async (dispatch) => {
   try {

@@ -3,8 +3,8 @@ import React from "react";
 const About = () => {
   return (
     <div className="my-10">
-      <div className="container flex items-center gap-6">
-        <div className="w-1/2 bg-white p-4 rounded-lg shadow-md">
+      <div className="container flex flex-col md:flex-row items-center gap-6">
+        <div className="md:w-1/2 bg-white p-4 rounded-lg shadow-md">
           <h1 className="text-3xl font-bold pb-5">About Us</h1>
           <p className="text-lg mb-4">
             Welcome to our gadgets website! We're passionate about technology
@@ -27,7 +27,7 @@ const About = () => {
             source for all things gadgets!
           </p>
         </div>
-        <div className="w-1/2">
+        <div className="md:w-1/2">
           <img src="about.webp" alt="" className="w-full" />
         </div>
       </div>

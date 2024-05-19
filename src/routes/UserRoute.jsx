@@ -1,5 +1,7 @@
 import React from "react";
 import { Route, Routes } from "react-router-dom";
+import Login from "src/components/Login";
+import Register from "src/components/Register";
 import About from "src/pages/user/about/About";
 import Cart from "src/pages/user/cart/Cart";
 import Contact from "src/pages/user/contact/Contact";
@@ -13,6 +15,8 @@ const UserRoute = () => {
       <Routes>
         <Route path="/" element={<Home />} />
         <Route path="/home" element={<Home />} />
+        <Route path="/login" element={<Login />} />
+        <Route path="/register" element={<Register />} />
         <Route path="/product/:product_id" element={<SinglePage />} />
         <Route path="/products" element={<Product />} />
         <Route path="/about" element={<About />} />

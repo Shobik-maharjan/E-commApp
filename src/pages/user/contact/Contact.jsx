@@ -5,8 +5,8 @@ import Phone from "components/user/contact/Phone";
 
 const Contact = () => {
   return (
-    <div className="w-10/12 mx-auto">
-      <div className="grid grid-cols-2 justify-center gap-4 p-4">
+    <div className="md:w-10/12 mx-auto">
+      <div className="grid md:grid-cols-2  justify-center gap-4 md:p-4 py-4">
         <div className="flex flex-col justify-between py-4">
           <div className="flex flex-col gap-4">
             <h2 className="font-bold text-2xl">Have a Query in Mind?</h2>
@@ -48,7 +48,7 @@ const Contact = () => {
               placeholder="Details about Query"
               className="p-2 rounded-lg"
             ></textarea>
-            <button className="bg-green-500 text-white w-fit px-4 py-2 rounded-md mx-auto hover:bg-green-500/90">
+            <button className="bg-green-600 text-white w-fit px-4 py-2 rounded-md mx-auto hover:bg-green-600/70">
               Submit
             </button>
           </form>

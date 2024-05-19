@@ -13,7 +13,7 @@ const AddProduct = () => {
     productDescription: "",
     productImage: "",
   });
-  const category = ["Mobile", "Monitor", "Laptop", "Smart Watch"];
+  const category = ["Mobile", "Monitor", "Laptop", , "Keyboard", "Mouse"];
   const [error, setError] = useState("");
   const fileInputRef = useRef(null);
 
