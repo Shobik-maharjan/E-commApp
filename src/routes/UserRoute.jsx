@@ -1,10 +1,12 @@
 import React from "react";
 import { Route, Routes } from "react-router-dom";
 import Login from "src/components/Login";
+import PageNotFound from "src/components/PageNotFound";
 import Register from "src/components/Register";
 import About from "src/pages/user/about/About";
 import Cart from "src/pages/user/cart/Cart";
 import Contact from "src/pages/user/contact/Contact";
+import ForgotPassword from "src/pages/user/fotgotPassword/ForgotPassword";
 import Home from "src/pages/user/home/Home";
 import Product from "src/pages/user/product/Product";
 import SinglePage from "src/pages/user/singlePage/SinglePage";
@@ -22,6 +24,8 @@ const UserRoute = () => {
         <Route path="/about" element={<About />} />
         <Route path="/contact-us" element={<Contact />} />
         <Route path="/cart" element={<Cart />} />
+        <Route path="/forgot-password" element={<ForgotPassword />} />
+        <Route path="*" element={<PageNotFound />} />
       </Routes>
     </div>
   );

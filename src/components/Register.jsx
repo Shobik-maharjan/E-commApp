@@ -52,7 +52,7 @@ const Register = () => {
             <div className="flex flex-col gap-2 mt-4">
               <div className="mx-0">
                 <label htmlFor="email" className="required">
-                  Email :
+                  Email
                 </label>
                 <input
                   value={values.email}
@@ -71,7 +71,7 @@ const Register = () => {
               </div>
               <div className="input-container">
                 <label htmlFor="username" className="required">
-                  Username :
+                  Username
                 </label>
                 <input
                   value={values.username}
@@ -89,7 +89,7 @@ const Register = () => {
               </div>
               <div className="input-container">
                 <label htmlFor="password" className="required">
-                  Password :
+                  Password
                 </label>
                 <input
                   value={values.password}
@@ -107,7 +107,7 @@ const Register = () => {
               </div>
               <div className="input-container">
                 <label htmlFor="confirmPassword" className="required">
-                  Confirm Password :
+                  Confirm Password
                 </label>
                 <input
                   value={values.confirmPassword}
@@ -128,7 +128,7 @@ const Register = () => {
               <button
                 type="submit"
                 id="form-login"
-                className="py-2.5 px-5 bg-emerald-500 text-white rounded-md text-xl uppercase mb-2.5 w-full hover:bg-emerald-600"
+                className="py-2.5 px-5 bg-green-600 text-white rounded-md text-xl uppercase mb-2.5 w-full hover:bg-green-600/80"
               >
                 Register
               </button>
@@ -137,7 +137,7 @@ const Register = () => {
             <div className="text-red-500 capitalize">{error}</div>
 
             <div className="text-right text-xl flex justify-between py-2.5 px-0">
-              <Link className="hover:text-emerald-600" to={"/login"}>
+              <Link className="hover:text-green-600" to={"/login"}>
                 Login Here
               </Link>
             </div>

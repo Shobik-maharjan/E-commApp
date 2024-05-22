@@ -49,7 +49,7 @@ const Login = () => {
             <h2 className="text-center text-2xl">Login</h2>
             <div className="flex flex-col gap-2 mt-4">
               <div className="flex flex-col gap-2">
-                <label htmlFor="email">Email : </label>
+                <label htmlFor="email">Email</label>
                 <input
                   type="text"
                   name="email"
@@ -67,7 +67,7 @@ const Login = () => {
                 </div>
               </div>
               <div className="flex flex-col gap-2">
-                <label htmlFor="password">Password : </label>
+                <label htmlFor="password">Password</label>
                 <input
                   type="password"
                   name="password"
@@ -86,7 +86,7 @@ const Login = () => {
               <button
                 type="submit"
                 id="form-login"
-                className="py-2.5 px-5 bg-emerald-500 text-white rounded-md text-xl uppercase mb-2.5 w-full hover:bg-emerald-600"
+                className="py-2.5 px-5 bg-green-600 text-white rounded-md text-xl uppercase mb-2.5 w-full hover:bg-green-600/80"
               >
                 Login
               </button>
@@ -94,12 +94,12 @@ const Login = () => {
 
             <div className="text-red-500">{error}</div>
 
-            <div className="text-right text-xl flex gap-20 py-2.5 px-0">
-              <Link className="hover:text-emerald-600" to={"/register"}>
+            <div className="text-right text-xl flex gap-10 py-2.5 px-0">
+              <Link className="hover:text-green-600" to={"/register"}>
                 Register
               </Link>
-              <Link to="/forgetPassword" className="hover:text-emerald-600">
-                {/* forget password? */}
+              <Link to="/forgot-password" className="hover:text-green-600">
+                Forgot password?
               </Link>
             </div>
           </div>

@@ -69,9 +69,8 @@ export const addToCart =
     }
   };
 
-export const updateCartData = (id, updatedQuantity) => () => {
+export const updateCartData = (itemId, newQuantity) => () => {
   try {
-    console.log("🚀 ~ updateCartData ~ id:", id);
     onAuthStateChanged(auth, async (user) => {
       if (user) {
         const userId = user.uid;
@@ -79,9 +78,9 @@ export const updateCartData = (id, updatedQuantity) => () => {
         const docSnap = await getDoc(docRef);
         const myCart = docSnap?.data()?.myCart;
 
-        const index = myCart?.findIndex((item) => item.id === id.id);
+        const index = myCart?.findIndex((item) => item.id === itemId);
         if (index !== -1) {
-          myCart[index].totalQuantity = updatedQuantity;
+          myCart[index].totalQuantity = newQuantity;
           await updateDoc(docRef, {
             myCart: myCart,
           });

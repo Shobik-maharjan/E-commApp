@@ -13,7 +13,7 @@ import Email from "./contact/Email";
 import Phone from "./contact/Phone";
 
 const Footer = () => {
-  const quickLink = ["Home", "About", "Products", "Contact"];
+  const quickLink = ["Home", "Products", "About", "Contact Us"];
   const categoryLink = ["Mobile", "Laptop", "Monitor", "Mouse", "Keyboard"];
 
   const copyrightLinks = [
@@ -83,8 +83,8 @@ const Footer = () => {
                   <div className="relative email flex flex-col justify-center">
                     <input
                       type="email"
-                      name="email"
-                      id="email"
+                      name="footerEmail"
+                      id="footerEmail"
                       placeholder="Your Email"
                       className="border w-full p-4"
                     />

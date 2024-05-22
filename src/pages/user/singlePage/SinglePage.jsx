@@ -84,7 +84,7 @@ const SinglePage = () => {
                 <div className="cart">
                   {getCart &&
                   getCart.find((item) => item.id === id.product_id) ? (
-                    <button className="bg-green-600 hover:bg-green-600/90 px-3 py-2 rounded-md text-white text-lg cursor-not-allowed">
+                    <button className="bg-green-600/50 px-3 py-2 rounded-md text-white text-lg cursor-not-allowed">
                       Already in cart
                     </button>
                   ) : (

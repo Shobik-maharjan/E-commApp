@@ -36,7 +36,6 @@ const Product = () => {
     }, 1000);
   };
   const handleCategoryChange = (selectedOption) => {
-    console.log("🚀 ~ handleCategoryChange ~ selectedOption:", selectedOption);
     const category = selectedOption.value;
     setSelectedCategory(category);
     setProductToShow(8);
@@ -117,16 +116,16 @@ const Product = () => {
                   </div>
                 ))}
           </div>
-          {productToShow < (searchProducts?.length || products?.length) ||
-            (searchProducts?.length <= 0 && (
+          {productToShow < (searchProducts?.length || products?.length) &&
+            searchProducts?.length > 0 && (
               <button
                 onClick={handleLoadMore}
                 className="border hover:border-green-600 mt-5 hover:bg-green-600 text-lg hover:text-white rounded-md px-4 py-2 w-fit mx-auto font-semibold"
               >
                 Load More ...
               </button>
-            ))}
-          {searchProducts?.length <= 0 && (
+            )}
+          {searchProducts?.length === 0 && search && (
             <h2 className="text-center font-bold text-2xl">
               Product Not Found
             </h2>

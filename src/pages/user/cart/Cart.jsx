@@ -29,7 +29,6 @@ const Cart = () => {
   const [quantity, setQuantity] = useState(1);
   const [totalPrice, setTotalPrice] = useState(0);
   const [cartItems, setCartItems] = useState([]);
-  const [updatedQuantity, setUpdatedQuantity] = useState();
 
   useEffect(() => {
     // Calculate total price and quantity whenever cart items change
@@ -51,7 +50,6 @@ const Cart = () => {
   };
 
   const handleQuantityChange = (newQuantity, itemId) => {
-    setUpdatedQuantity(newQuantity);
     // Find the item in cartItems and update its quantity
     const updatedCartItems = cartItems.map((item) => {
       if (item.id === itemId) {
@@ -74,10 +72,7 @@ const Cart = () => {
     });
     setQuantity(quantity);
     setTotalPrice(total);
-  };
-
-  const updateCart = (id) => {
-    dispatch(updateCartData(id, updatedQuantity));
+    dispatch(updateCartData(itemId, newQuantity));
   };
 
   return (
@@ -123,12 +118,12 @@ const Cart = () => {
                                 }
                               />
                             </div>
-                            <button
+                            {/* <button
                               onClick={() => updateCart({ id: item.id })}
                               className="px-3 py-1.5 bg-green-600 rounded-md text-white"
                             >
                               Update
-                            </button>
+                            </button> */}
                           </div>
                         </div>
                       </div>

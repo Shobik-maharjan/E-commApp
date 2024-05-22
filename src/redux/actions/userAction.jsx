@@ -1,5 +1,6 @@
 import {
   createUserWithEmailAndPassword,
+  sendPasswordResetEmail,
   signInWithEmailAndPassword,
   updateProfile,
 } from "firebase/auth";
@@ -94,6 +95,17 @@ export const currentUser = () => (dispatch) => {
       });
     }
   });
+};
+
+export const resetPassword = (email, setError) => async () => {
+  try {
+    await sendPasswordResetEmail(auth, email);
+    toast.success("Password reset email sent successfully!");
+    setError("");
+  } catch (error) {
+    setError("Invalid Email Address");
+    console.log(error.message);
+  }
 };
 
 export const logoutUser = () => () => {
