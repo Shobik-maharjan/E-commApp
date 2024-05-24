@@ -14,23 +14,23 @@ const ForgotPassword = () => {
   };
   return (
     <>
-      <form action="">
-        <div className="flex flex-col gap-4 text-center items-center h-[85vh] justify-center mx-auto">
+      <form action="" className="w-96 mx-auto flex my-10">
+        <div className="flex flex-col gap-4 text-center bg-gray-200 px-8 py-10 rounded-md shadow-[6px_6px_14px_1px]">
           <h2 className="font-bold text-xl">Forgot Passowrd ?</h2>
           <p>Enter your email address to reset your password</p>
 
-          <div className="flex flex-col gap-4 w-80">
+          <div className="flex flex-col gap-4">
             <input
               type="email"
               name="email"
               id="email"
               placeholder="example@gmail.com"
-              className="border border-black p-2  rounded-md"
+              className="border border-black p-2 rounded-md"
               onChange={(e) => setEmail(e.target.value)}
             />
             <button
               type="submit"
-              className="bg-green-600 hover:bg-green-600/90 text-white py-2 rounded-md"
+              className="bg-green-600 hover:bg-green-600/90 text-white py-2.5 px-5 rounded-md"
               onClick={resetUserPassword}
             >
               Submit

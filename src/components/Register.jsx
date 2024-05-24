@@ -45,7 +45,7 @@ const Register = () => {
   }, []);
   return (
     <>
-      <div className="flex my-20 justify-center items-center">
+      <div className="flex my-10 justify-center items-center">
         <form action="" onSubmit={handleSubmit} className="w-96">
           <div className="bg-gray-200 rounded-md uppercase shadow-[6px_6px_14px_1px] px-8 py-10">
             <h2 className="text-center text-2xl">Register</h2>
