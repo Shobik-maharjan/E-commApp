@@ -4,7 +4,6 @@ import { db } from "src/config/firebase";
 
 export const addCategory = (category) => async (dispatch) => {
   try {
-    console.log("🚀 ~ addCategory ~ category:", category);
     await addDoc(collection(db, "category"), { category });
     dispatch({
       type: ADD_CATEGORY,

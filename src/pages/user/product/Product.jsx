@@ -32,7 +32,9 @@ const Product = () => {
     setSearch(searchQuery);
     setProductToShow(8);
     setTimeout(() => {
-      dispatch(getSearchProduct({ prodName: searchQuery }));
+      dispatch(
+        getSearchProduct({ prodName: searchQuery, category: selectedCategory })
+      );
     }, 1000);
   };
   const handleCategoryChange = (selectedOption) => {
@@ -46,6 +48,9 @@ const Product = () => {
     { value: "", label: "Select a category" },
     { value: "Mobile", label: "Mobile" },
     { value: "Laptop", label: "Laptop" },
+    { value: "Monitor", label: "Monitor" },
+    { value: "Mouse", label: "Mouse" },
+    { value: "Keyboard", label: "Keyboard" },
   ];
   const customStyles = {
     control: (provided, state) => ({
@@ -85,12 +90,12 @@ const Product = () => {
             id="search"
             value={search}
             placeholder="search"
-            className="px-4 py-2 md:w-1/3 rounded-md border-2 border-slate-300 hover:border-green-700"
+            className="px-4 py-2 w-1/2 sm:w-full rounded-md border-2 border-slate-300 hover:border-green-700"
             onChange={(e) => handleSearch(e)}
           />
           <Select
             styles={customStyles}
-            className="md:min-w-32 md:max-w-fit"
+            className="md:max-w-fit w-full"
             onChange={handleCategoryChange}
             options={options}
             value={options.find((option) => option.value === selectedCategory)}
@@ -125,7 +130,7 @@ const Product = () => {
                 Load More ...
               </button>
             )}
-          {searchProducts?.length === 0 && search && (
+          {searchProducts?.length === 0 && (search || options) && (
             <h2 className="text-center font-bold text-2xl">
               Product Not Found
             </h2>

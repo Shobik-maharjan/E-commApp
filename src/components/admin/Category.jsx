@@ -8,7 +8,6 @@ const Category = () => {
   const [categorys, setCategory] = useState("");
 
   const { category } = useSelector((state) => state.categoryList);
-  console.log("🚀 ~ Category ~ category:", category);
 
   const handleCategory = (e) => {
     setCategory(e.target.value);

@@ -22,7 +22,6 @@ const Navbar = () => {
 
   const showMenuToggle = () => {
     setShowMenu(!showMenu);
-    console.log(showMenu);
   };
 
   const handleResize = () => {

@@ -5,12 +5,18 @@ import { loginSchema } from "src/schemas";
 import { useDispatch } from "react-redux";
 import { loginUser } from "src/redux/actions/userAction";
 import Navbar from "./user/Navbar";
+import { FaEye, FaEyeSlash } from "react-icons/fa6";
 const Login = () => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const [error, setError] = useState("");
+  const [showPassword, setShowPassword] = useState(false);
 
-  const expireDate = new Date().setDate(new Date().getDate() + 1);
+  const togglePasswordVisibility = () => {
+    setShowPassword(!showPassword);
+  };
+
+  // const expireDate = new Date().setDate(new Date().getDate() + 1);
 
   const { values, errors, touched, handleBlur, handleChange, handleSubmit } =
     useFormik({
@@ -40,7 +46,6 @@ const Login = () => {
       navigate("/admin");
     }
   }, []);
-
   return (
     <>
       <div className="flex my-10 justify-center items-center">
@@ -59,7 +64,7 @@ const Login = () => {
                   onChange={handleChange}
                   onBlur={handleBlur}
                   // onChange={(e) => setEmail(e.target.value)}
-                  placeholder="email@gmail.com"
+                  placeholder="Email@gmail.com"
                   className="w-full p-2.5 rounded-md outline-none"
                 />
                 <div className="text-red-500">
@@ -68,17 +73,27 @@ const Login = () => {
               </div>
               <div className="flex flex-col gap-2">
                 <label htmlFor="password">Password</label>
-                <input
-                  type="password"
-                  name="password"
-                  id="password"
-                  value={values.password}
-                  onChange={handleChange}
-                  onBlur={handleBlur}
-                  // onChange={(e) => setPassword(e.target.value)}
-                  placeholder="password"
-                  className="w-full p-2.5 rounded-md outline-none"
-                />
+                <div className="relative">
+                  <input
+                    type={showPassword ? "text" : "password"}
+                    name="password"
+                    id="password"
+                    value={values.password}
+                    onChange={handleChange}
+                    onBlur={handleBlur}
+                    // onChange={(e) => setPassword(e.target.value)}
+                    placeholder="Password"
+                    className="w-full p-2.5 rounded-md outline-none"
+                  />
+                  {values.password.length > 0 && (
+                    <div
+                      className="absolute right-3 top-1/2 transform -translate-y-1/2 focus:outline-none cursor-pointer"
+                      onClick={togglePasswordVisibility}
+                    >
+                      {showPassword ? <FaEye /> : <FaEyeSlash />}
+                    </div>
+                  )}
+                </div>
                 <div className="text-red-500">
                   {errors.password && touched.password ? errors.password : null}
                 </div>

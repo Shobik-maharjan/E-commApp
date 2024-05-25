@@ -5,12 +5,16 @@ import { resetPassword } from "src/redux/actions/userAction";
 const ForgotPassword = () => {
   const [email, setEmail] = useState("");
   const [error, setError] = useState("");
-  console.log("🚀 ~ ForgotPassword ~ error:", error);
   const dispatch = useDispatch();
 
   const resetUserPassword = (e) => {
     e.preventDefault();
-    dispatch(resetPassword(email, setError));
+    if (email === null || email === "") {
+      setError("Please enter your email");
+      return;
+    } else {
+      dispatch(resetPassword(email, setError));
+    }
   };
   return (
     <>
@@ -24,7 +28,7 @@ const ForgotPassword = () => {
               type="email"
               name="email"
               id="email"
-              placeholder="example@gmail.com"
+              placeholder="Example@gmail.com"
               className="border border-black p-2 rounded-md"
               onChange={(e) => setEmail(e.target.value)}
             />
@@ -35,7 +39,7 @@ const ForgotPassword = () => {
             >
               Submit
             </button>
-            {error && <div className="text-red-500">{error}</div>}
+            {error && <div className="text-red-500 text-left">{error}</div>}
           </div>
         </div>
       </form>

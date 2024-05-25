@@ -5,12 +5,22 @@ import { useDispatch } from "react-redux";
 import { registerUser } from "src/redux/actions/userAction";
 import { useFormik } from "formik";
 import { registerSchema } from "src/schemas";
+import { FaEye, FaEyeSlash } from "react-icons/fa6";
 
 const Register = () => {
   const navigate = useNavigate();
   const [error, setError] = useState("");
-
+  const [showPassword, setShowPassword] = useState(false);
+  const [showConfirmPassword, setShowConfirmPassword] = useState(false);
   const dispatch = useDispatch();
+
+  const togglePasswordVisibility = () => {
+    setShowPassword(!showPassword);
+  };
+
+  const toggleConfirmPasswordVisibility = () => {
+    setShowConfirmPassword(!showConfirmPassword);
+  };
 
   const { values, errors, touched, handleBlur, handleChange, handleSubmit } =
     useFormik({
@@ -62,7 +72,7 @@ const Register = () => {
                   autoComplete="on"
                   onChange={handleChange}
                   onBlur={handleBlur}
-                  placeholder="email@gmail.com"
+                  placeholder="Email@gmail.com"
                   className="w-full my-2.5 mx-auto p-2.5 rounded-md outline-none"
                 />
                 <div className="text-red-500">
@@ -80,7 +90,7 @@ const Register = () => {
                   id="username"
                   onChange={handleChange}
                   onBlur={handleBlur}
-                  placeholder="username"
+                  placeholder="Username"
                   className="w-full my-2.5 mx-auto p-2.5 rounded-md outline-none"
                 />
                 <div className="text-red-500">
@@ -91,16 +101,26 @@ const Register = () => {
                 <label htmlFor="password" className="required">
                   Password
                 </label>
-                <input
-                  value={values.password}
-                  type="password"
-                  name="password"
-                  id="password"
-                  onChange={handleChange}
-                  onBlur={handleBlur}
-                  placeholder="password"
-                  className="w-full my-2.5 mx-auto p-2.5 rounded-md outline-none"
-                />
+                <div className="relative">
+                  <input
+                    value={values.password}
+                    type={showPassword ? "text" : "password"}
+                    name="password"
+                    id="password"
+                    onChange={handleChange}
+                    onBlur={handleBlur}
+                    placeholder="Password"
+                    className="w-full my-2.5 mx-auto p-2.5 rounded-md outline-none"
+                  />
+                  {values.password.length > 0 && (
+                    <div
+                      className="absolute right-3 top-1/2 transform -translate-y-1/2 focus:outline-none cursor-pointer"
+                      onClick={togglePasswordVisibility}
+                    >
+                      {showPassword ? <FaEye /> : <FaEyeSlash />}
+                    </div>
+                  )}
+                </div>
                 <div className="text-red-500">
                   {errors.password && touched.password ? errors.password : null}
                 </div>
@@ -109,16 +129,26 @@ const Register = () => {
                 <label htmlFor="confirmPassword" className="required">
                   Confirm Password
                 </label>
-                <input
-                  value={values.confirmPassword}
-                  type="password"
-                  name="confirmPassword"
-                  id="confirmPassword"
-                  onChange={handleChange}
-                  onBlur={handleBlur}
-                  placeholder="password"
-                  className="w-full my-2.5 mx-auto p-2.5 rounded-md outline-none"
-                />
+                <div className="relative">
+                  <input
+                    value={values.confirmPassword}
+                    type={showConfirmPassword ? "text" : "password"}
+                    name="confirmPassword"
+                    id="confirmPassword"
+                    onChange={handleChange}
+                    onBlur={handleBlur}
+                    placeholder="Confirm Password"
+                    className="w-full my-2.5 mx-auto p-2.5 rounded-md outline-none"
+                  />
+                  {values.confirmPassword.length > 0 && (
+                    <div
+                      className="absolute right-3 top-1/2 transform -translate-y-1/2 focus:outline-none cursor-pointer"
+                      onClick={toggleConfirmPasswordVisibility}
+                    >
+                      {showPassword ? <FaEye /> : <FaEyeSlash />}
+                    </div>
+                  )}
+                </div>
                 <div className="text-red-500">
                   {errors.confirmPassword && touched.confirmPassword
                     ? errors.confirmPassword
